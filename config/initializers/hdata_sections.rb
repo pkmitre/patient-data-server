@@ -5,11 +5,18 @@ require 'section_registry'
 ############################################################## 
 sr = SectionRegistry.instance
 
+sr.add_section('allergies', 'http://projecthdata.org/extension/advance_directive', 'Advance Directives') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::AdvanceDirectiveImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:advance_directive)
+end
 sr.add_section('allergies', 'http://projecthdata.org/extension/allergy', 'Allergies') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::AllergyImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:allergy)
 end
-sr.add_section('care_goals', 'http://projecthdata.org/extension/care-goal', 'Care Goals')
+sr.add_section('care_goals', 'http://projecthdata.org/extension/care-goal', 'Care Goals') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::CareGoalImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:care_goal)
+end
 sr.add_section('conditions', 'http://projecthdata.org/extension/condition', 'Conditions') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::ConditionImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:condition)
@@ -22,7 +29,14 @@ sr.add_section('immunizations', 'http://projecthdata.org/extension/immunization'
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::ImmunizationImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:immunization)
 end
-sr.add_section('medical_equipment', 'http://projecthdata.org/extension/medical-equipment', 'Medical Equipment')
+#sr.add_section('insurance_providers', 'http://projecthdata.org/extension/insurance_provider', 'Insurance Provider') do |importers, exporters|
+  #importers['application/xml'] = HealthDataStandards::Import::GreenC32::InsuranceProviderImporter.instance
+  #exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:insurance_provider)
+#end
+sr.add_section('medical_equipment', 'http://projecthdata.org/extension/medical-equipment', 'Medical Equipment') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::MedicalEquipmentImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:medical_equipment)
+end
 sr.add_section('medications', 'http://projecthdata.org/extension/medication', 'Medications') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::MedicationImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:medication)
