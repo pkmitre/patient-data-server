@@ -2,8 +2,8 @@ require "request_error"
 
 class EntriesController < ApplicationController
   before_filter :set_up_section
-  before_filter :find_record, only: [:show, :update, :delete, :index, :create]
-  before_filter :find_entry, only: [:show, :update, :delete]
+  before_filter :find_record, only: [:show, :update, :delete, :index, :create, :dicom_files, :dicom_file]
+  before_filter :find_entry, only: [:show, :update, :delete, :dicom_files, :dicom_file]
   skip_before_filter :verify_authenticity_token
   def index
     audit_log "event_index"
@@ -26,6 +26,18 @@ class EntriesController < ApplicationController
         render :xml => exporter.export(@entry)
       end
       wants.html { }
+    end
+  end
+
+  def dicom_files
+  end
+
+  def dicom_file
+    dicom_file = @entry.dicom_files.where(id: params[:dicom_file_id]).first
+    if params[:format] == 'jpg'
+      send_data dicom_file.jpeg, :type => 'image/jpg',:disposition => 'inline'
+    else
+      send_data dicom_file.data, :type => 'image/dcm',:disposition => 'inline'
     end
   end
   

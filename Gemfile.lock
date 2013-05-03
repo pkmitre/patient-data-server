@@ -80,6 +80,7 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    dicom (0.9.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -208,6 +209,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.4)
+    rmagick (2.13.2)
     ruby-openid (2.2.3)
     sass (3.2.8)
     sass-rails (3.2.6)
@@ -272,6 +274,7 @@ DEPENDENCIES
   cover_me
   devise
   devise_oauth2_providable!
+  dicom
   factory_girl_rails
   feedzirra
   health-data-standards (~> 2.0.0)
@@ -286,6 +289,7 @@ DEPENDENCIES
   pry
   pry-nav
   rails (= 3.2.13)
+  rmagick
   ruby-openid
   sass-rails (~> 3.2.3)
   symbolize

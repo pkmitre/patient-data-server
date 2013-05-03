@@ -18,6 +18,9 @@ gem 'omniauth-openid'
 gem 'kaminari'
 gem "symbolize", :require => "symbolize/mongoid"
 
+gem 'rmagick'
+gem 'dicom'
+
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"

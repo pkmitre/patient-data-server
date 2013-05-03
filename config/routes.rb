@@ -61,6 +61,8 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put
+  match "records/:record_id/:section/:id/dicom_files" => "entries#dicom_files", :via => :get
+  match "records/:record_id/:section/:id/dicom_files/:dicom_file_id" => "entries#dicom_file", :via => :get
 
   root :to =>  "records#index"
 

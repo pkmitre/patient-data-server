@@ -5,4 +5,5 @@ require File.expand_path('../application', __FILE__)
 HdataServer::Application.initialize!
 
 require_relative "../lib/hds/entry"
+require_relative "../lib/hds/encounter"
 require_relative "../lib/hds/record"
