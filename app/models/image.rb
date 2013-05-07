@@ -1,7 +1,6 @@
-class DicomFile
+class Image
   include Mongoid::Document
-  belongs_to :encounter
-  field :study_description,  type: String
+  belongs_to :study
   field :series_description, type: String
   field :instance_number,    type: Integer
   field :data,               type: Moped::BSON::Binary

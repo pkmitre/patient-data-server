@@ -29,18 +29,6 @@ class EntriesController < ApplicationController
     end
   end
 
-  def dicom_files
-  end
-
-  def dicom_file
-    dicom_file = @entry.dicom_files.where(id: params[:dicom_file_id]).first
-    if params[:format] == 'jpg'
-      send_data dicom_file.jpeg, :type => 'image/jpg',:disposition => 'inline'
-    else
-      send_data dicom_file.data, :type => 'image/dcm',:disposition => 'inline'
-    end
-  end
-  
   def create
     content_type = request.content_type
     if content_type == "multipart/form-data"
