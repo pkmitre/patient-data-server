@@ -55,6 +55,22 @@ class EntriesControllerTest < AtomTest
     result = @record.results[1]
     assert_equal 135, result.values.first.scalar
   end
+
+  test "post a new result section document w/metadata" do
+    # result_file = File.read(Rails.root.join('test/fixtures/result.xml'))
+    # metadata_file = Rack::Test::UploadedFile.new(Rails.root.join('test/fixtures/metadata.xml'), "application/xml")
+    metadata_file = fixture_file_upload("test/fixtures/metadata.xml", "application/xml")
+    result_file = fixture_file_upload("test/fixtures/result.xml", "application/xml")
+    request.env['CONTENT_TYPE'] = 'multipart/form-data'
+    post :create, {record_id: @record.medical_record_number, section: 'results', metadata: metadata_file, content: result_file}
+
+    @record.reload
+    result = @record.results[1]
+
+    #test metadata creation
+
+    assert_response 201
+  end
   
   test "update a lab result" do
     result_file = File.read(Rails.root.join('test/fixtures/result.xml'))

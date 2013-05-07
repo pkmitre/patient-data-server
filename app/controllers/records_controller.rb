@@ -22,7 +22,6 @@ class RecordsController < ApplicationController
 
     response['Location'] = record_url(id: patient_data.medical_record_number)
     render :text => 'success', :status => 201
-    respond_with(@record, location: record_url(id: patient_data.medical_record_number))
   end
 
   def options

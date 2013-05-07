@@ -2,12 +2,12 @@ require "request_error"
 
 class EntriesController < ApplicationController
   before_filter :set_up_section
+  before_filter :audit_log
   before_filter :find_record, only: [:show, :update, :delete, :index, :create]
   before_filter :find_entry, only: [:show, :update, :delete]
   skip_before_filter :verify_authenticity_token
-  def index
-    audit_log "event_index"
 
+  def index
     @entries = @record.send(@section_name)
     respond_to do |wants|
       wants.atom {}
@@ -16,7 +16,6 @@ class EntriesController < ApplicationController
   end
   
   def show
-    audit_log "event_show"
     ## TODO need to auditlog the actual record content
 
     respond_to do |wants|
@@ -32,21 +31,18 @@ class EntriesController < ApplicationController
   def create
     content_type = request.content_type
     if content_type == "multipart/form-data"
-      audit_log "event_create_multipart"
-      render text: 'Metadata POSTing not yet implemented', status: 400
+      section_document = import_document(params[:content].content_type, params[:content])
+      section_document.document_metadata = import_metadata(params[:metadata])
     else
-      audit_log "event_create"
-
       section_document = import_document(content_type)
-      @record.send(@section_name).push(section_document)
-      response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
-      render text: 'Section document created', status: 201
     end
+
+    @record.send(@section_name).push(section_document)
+    response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
+    render text: 'Section document created', status: 201
   end
   
   def update
-    audit_log "event_update"
-
     content_type = request.content_type
     section_document = import_document(content_type)
     @entry.update_attributes!(section_document.attributes)
@@ -59,19 +55,18 @@ class EntriesController < ApplicationController
   end
 
   def delete
-    audit_log "event_delete"
-
     @entry.destroy
     render nothing: true, status: 204
   end
 
   private
-  
-  def import_document(content_type)
+
+  def import_document(content_type, doc=nil)
+    document = doc || request.body.read
     importer = @extension.importers[content_type]
     raw_content = nil
     if content_type == 'application/xml'
-      raw_content = Nokogiri::XML(request.body.read)
+      raw_content = Nokogiri::XML(document)
     end
     importer.import(raw_content)
   end
@@ -84,6 +79,11 @@ class EntriesController < ApplicationController
       render text: 'Section Not Found', status: 404
     end
   end
+
+  def import_metadata(xml)
+    input = Nokogiri::XML(xml.read)
+    HealthDataStandards::Import::Hdata::MetadataImporter.instance.import(input)
+  end
   
   def find_entry
     if Moped::BSON::ObjectId.legal?(params[:id])
@@ -94,14 +94,14 @@ class EntriesController < ApplicationController
     end
   end
 
-  def audit_log(action)
+  def audit_log
     return if current_user.nil?
-
+    event = "#{controller_name}_#{action_name}"
     desc = ""
     desc = "record_id:#{params[:record_id]}" if params[:record_id]
     desc += "|section:#{params[:section]}" if params[:section]
     desc += "|id:#{params[:id]}" if params[:id]
-    AuditLog.create(requester_info: current_user.email, event: action, description: desc)
+    AuditLog.create(requester_info: current_user.email, event: event, description: desc)
   end
 
 end

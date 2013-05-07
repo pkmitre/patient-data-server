@@ -1,0 +1,24 @@
+<DocumentMetaData>
+  <PedigreeInfo>
+    <Author role="author">Dr. John Doe</Author>
+    <Organization>Sample Provider, Inc.</Organization>
+  </PedigreeInfo>
+  <DocumentId>1</DocumentId>
+  <LinkedDocuments>
+    <LinkInfo>
+      <Target>http://localhost:3000/record/1/encounters/1.xml</Target>
+    </LinkInfo>
+  </LinkedDocuments>
+  <RecordDate>
+    <CreatedDateTime>2010-02-21T12:21:11Z</CreatedDateTime>
+    <Modified>
+      <ModifiedDateTime>
+        2010-02-27T12:21:11Z
+      </ModifiedDateTime>
+      <PedigreeInfo>
+        <Author role="author">Dr. John Doe</Author>
+        <Organization>Sample Provider, Inc.</Organization>
+      </PedigreeInfo>
+    </Modified>
+  </RecordDate>
+</DocumentMetaData>
