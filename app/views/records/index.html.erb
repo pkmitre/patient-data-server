@@ -1,11 +1,22 @@
-<%= stylesheet_link_tag :record %>
-
 <% if  isUserRole?(:med_doctor) %>
   <h3>Consultations</h3>
   <%= link_to 'My Consultations', ref_consult_requests_path %> 
 <% end %>
 
 <h3>Patient Records</h3>
+<table class="table table-condensed patient-records ">
+<thead>
+	<tr>
+		<th>#</th>
+		<th>Patient name</th>
+	</tr>
+</thead>
+<tbody>
 <% @records.each do |record| %>
-    <div class="record"><%= record.medical_record_number %>. <%= link_to((record.first + '&nbsp;' + record.last).html_safe, root_feed_path(record.medical_record_number)) %></div>
+		<tr>
+    <td><%= record.medical_record_number %></td>
+    <td><%= link_to((record.first + '&nbsp;' + record.last).html_safe, root_feed_path(record.medical_record_number)) %></td>
+    </tr>
 <% end %>
+</tbody>
+</table>
