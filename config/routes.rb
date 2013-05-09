@@ -50,7 +50,10 @@ HdataServer::Application.routes.draw do
     resources :vital_sign_feeds
   end
 
-  #
+  match "records/:record_id/studies" => "studies#index", :as => :studies, :via => :get
+  match "records/:record_id/studies/:study_id/images" => "images#index", :as => :images, :via => :get
+  match "records/:record_id/studies/:study_id/images/:image_id" => "images#show", :as => :image, :via => :get
+
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom, :via=> :get
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :via => :get
   match "records/:id/root.xml" , :to => lambda { |env| [405, {}, ["Not Implemented"]] }

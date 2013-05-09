@@ -1,5 +1,3 @@
-require 'request_error'
-
 class ApplicationController < ActionController::Base
 #  protect_from_forgery
 
@@ -7,11 +5,11 @@ class ApplicationController < ActionController::Base
   before_filter :audit_log_all
   before_filter :set_breadcrumbs
 
-  rescue_from RequestError do |e|
+  rescue_from ActionController::RoutingError do |e|
     if e.message.nil?
-      render file: "public/#{e.status}.html", :status => e.status
+      render file: "public/404.html", :status => 404
     else
-      render text: e.message, :status => e.status
+      render text: e.message, :status => 404
     end
   end
 
@@ -44,7 +42,11 @@ class ApplicationController < ActionController::Base
   def find_record
     record_id = params[:record_id] || params[:id]
     @record = Record.where(medical_record_number: record_id).first
-    raise RequestError.new(404) if @record.nil?
+    not_found if @record.nil?
+  end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   ##

@@ -1,24 +1,25 @@
-<DocumentMetaData>
-  <PedigreeInfo>
-    <Author role="author">Dr. John Doe</Author>
-    <Organization>Sample Provider, Inc.</Organization>
-  </PedigreeInfo>
-  <DocumentId>1</DocumentId>
-  <LinkedDocuments>
-    <LinkInfo>
-      <Target>http://localhost:3000/record/1/encounters/1.xml</Target>
-    </LinkInfo>
-  </LinkedDocuments>
-  <RecordDate>
-    <CreatedDateTime>2010-02-21T12:21:11Z</CreatedDateTime>
-    <Modified>
-      <ModifiedDateTime>
+<?xml version="1.0" encoding="utf-8"?>
+<hrf-md:DocumentMetaData xmlns:hrf-md="http://projecthdata.org/hdata/schemas/2009/11/metadata">
+  <hrf-md:PedigreeInfo>
+    <hrf-md:Author role="author">Dr. John Doe</hrf-md:Author>
+    <hrf-md:Organization>Sample Provider, Inc.</hrf-md:Organization>
+  </hrf-md:PedigreeInfo>
+  <hrf-md:DocumentId>1</hrf-md:DocumentId>
+  <hrf-md:LinkedDocuments>
+    <hrf-md:LinkInfo>
+      <hrf-md:Target>http://localhost:3000/record/1/encounters/1.xml</hrf-md:Target>
+    </hrf-md:LinkInfo>
+  </hrf-md:LinkedDocuments>
+  <hrf-md:RecordDate>
+    <hrf-md:CreatedDateTime>2010-02-21T12:21:11Z</hrf-md:CreatedDateTime>
+    <hrf-md:Modified>
+      <hrf-md:ModifiedDateTime>
         2010-02-27T12:21:11Z
-      </ModifiedDateTime>
-      <PedigreeInfo>
-        <Author role="author">Dr. John Doe</Author>
-        <Organization>Sample Provider, Inc.</Organization>
-      </PedigreeInfo>
-    </Modified>
-  </RecordDate>
-</DocumentMetaData>
+      </hrf-md:ModifiedDateTime>
+      <hrf-md:PedigreeInfo>
+        <hrf-md:Author role="author">Dr. John Doe</hrf-md:Author>
+        <hrf-md:Organization>Sample Provider, Inc.</hrf-md:Organization>
+      </hrf-md:PedigreeInfo>
+    </hrf-md:Modified>
+  </hrf-md:RecordDate>
+</hrf-md:DocumentMetaData>

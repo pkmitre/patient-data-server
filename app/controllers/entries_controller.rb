@@ -1,18 +1,17 @@
-require "request_error"
-
-class EntriesController < ApplicationController
-  before_filter :set_up_section
+class EntriesController < HdataController
   before_filter :audit_log
-  before_filter :find_record, only: [:show, :update, :delete, :index, :create]
-  before_filter :find_entry, only: [:show, :update, :delete]
+  before_filter :find_entry, except: [:index, :create]
+
   skip_before_filter :verify_authenticity_token
+
+  respond_to :html
+  respond_to :atom, only: [:index]
+  respond_to :json, :xml, except: [:index, :delete]
+
 
   def index
     @entries = @record.send(@section_name)
-    respond_to do |wants|
-      wants.atom {}
-      wants.html {}
-    end
+    respond_with(@entries)
   end
   
   def show
@@ -27,28 +26,18 @@ class EntriesController < ApplicationController
       wants.html { }
     end
   end
-  
-  def create
-    content_type = request.content_type
-    if content_type == "multipart/form-data"
-      section_document = import_document(params[:content].content_type, params[:content])
-      section_document.document_metadata = import_metadata(params[:metadata])
-    else
-      section_document = import_document(content_type)
-    end
 
-    @record.send(@section_name).push(section_document)
-    response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
+  def create
+    @record.send(@section_name).push(@document)
+    response['Location'] = section_document_url(record_id: @record, section: @section_name, id: @document)
     render text: 'Section document created', status: 201
   end
   
   def update
-    content_type = request.content_type
-    section_document = import_document(content_type)
-    @entry.update_attributes!(section_document.attributes)
+    @entry.update_attributes!(@document.attributes)
     @entry.reflect_on_all_associations(:embeds_many).each do |relation|
       @entry.send(relation.name).destroy_all
-      @entry.send("#{relation.name}=", section_document.send(relation.name))
+      @entry.send("#{relation.name}=", @document.send(relation.name))
     end
     
     render text: 'Document updated', status: 200
@@ -61,47 +50,9 @@ class EntriesController < ApplicationController
 
   private
 
-  def import_document(content_type, doc=nil)
-    document = doc || request.body.read
-    importer = @extension.importers[content_type]
-    raw_content = nil
-    if content_type == 'application/xml'
-      raw_content = Nokogiri::XML(document)
-    end
-    importer.import(raw_content)
-  end
-  
-  def set_up_section
-    @section_name = params[:section]
-    sr = SectionRegistry.instance
-    @extension = sr.extension_from_path(params[:section])
-    unless @extension
-      render text: 'Section Not Found', status: 404
-    end
-  end
-
-  def import_metadata(xml)
-    input = Nokogiri::XML(xml.read)
-    HealthDataStandards::Import::Hdata::MetadataImporter.instance.import(input)
-  end
-  
   def find_entry
-    if Moped::BSON::ObjectId.legal?(params[:id])
-      @entry = @record.send(@section_name).where(id: params[:id]).first
-      raise RequestError.new(404, 'Entry Not Found') unless @entry
-    else
-      raise RequestError.new(404, 'Not Found')
-    end
-  end
-
-  def audit_log
-    return if current_user.nil?
-    event = "#{controller_name}_#{action_name}"
-    desc = ""
-    desc = "record_id:#{params[:record_id]}" if params[:record_id]
-    desc += "|section:#{params[:section]}" if params[:section]
-    desc += "|id:#{params[:id]}" if params[:id]
-    AuditLog.create(requester_info: current_user.email, event: event, description: desc)
+    @entry = @record.send(@section_name).where(id: params[:id]).first if Moped::BSON::ObjectId.legal?(params[:id])
+    not_found unless @entry
   end
 
 end

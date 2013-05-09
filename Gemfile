@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.8'
-gem "health-data-standards", '~> 2.0.0'
+gem 'rails', '3.2.13'
+gem "health-data-standards",:git => 'https://github.com/projectcypress/health-data-standards.git', branch: 'develop'
 gem 'ruby-openid'
-gem "mongoid", '~> 3.0.6'
+gem "mongoid", '~> 3.1.0'
 gem "pry"
 gem 'pry-nav'
 gem "capistrano", "2.13.5"
@@ -17,6 +17,9 @@ gem 'omniauth'
 gem 'omniauth-openid'
 gem 'kaminari'
 gem "symbolize", :require => "symbolize/mongoid"
+
+gem 'rmagick'
+gem 'dicom'
 
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
