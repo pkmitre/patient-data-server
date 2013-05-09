@@ -1,0 +1,5 @@
+<ul>
+  <% @studies.each do |study| %>
+    <li><%= link_to study.description, images_url(@record.medical_record_number, study) %></li>
+  <% end %>
+</ul>
