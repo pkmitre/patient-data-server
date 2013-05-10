@@ -8,7 +8,30 @@
  * require_tree .
 */
 
+/* tweak headline font sizes down a notch */
+h1,
+h2,
+h3 { line-height: $baseLineHeight * 2; }
 
+h1 { font-size: $baseFontSize * 2.25; } // ~38px
+h2 { font-size: $baseFontSize * 2.00; } // ~32px
+h3 { font-size: $baseFontSize * 1.5; } // ~24px
+h4 { font-size: $baseFontSize * 1.25; } // ~18px
+h5 { font-size: $baseFontSize; }
+h6 { font-size: $baseFontSize * 0.85; } // ~12px
+
+h1 small { font-size: $baseFontSize * 1.75; } // ~24px
+h2 small { font-size: $baseFontSize * 1.25; } // ~18px
+h3 small { font-size: $baseFontSize; }
+h4 small { font-size: $baseFontSize; }
+
+$out-of-range-value: red;
+
+.record .out-of-range-value {
+    color: $out-of-range-value;
+}
+
+/* header styles */
 #logo {
 	font-weight:bold;
 	color:$grayDarker;
@@ -24,6 +47,9 @@
 .navbar .nav > li {
 	line-height:26px;
 }
+
+
+
 table.patient-records {
 	th:first-child, th:first-child { 
 		width:2em;
@@ -32,6 +58,9 @@ table.patient-records {
 		border:none;
 	}
 }
+
+table.table.table-noborders td {border:none}
+
 dl.dl-horizontal{
 	margin-bottom:5px;
   dt {
@@ -43,13 +72,19 @@ dl.dl-horizontal{
 		text-align:right;
 	}
 }
-
+.form-horizontal .control-group {
+	margin-bottom:10px;
+	.controls p {
+		margin-bottom:5px;
+		margin-top:5px;
+	}
+}
 .span8 dl.dl-horizontal dt {width:420px}
 
 .form-set {
   position: relative;
   margin: 15px 0;
-  padding: 39px 19px 14px;
+  padding: 19px 0 0 0;
   *padding-top: 19px;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -57,10 +92,13 @@ dl.dl-horizontal{
      -moz-border-radius: 4px;
           border-radius: 4px;
 }
-
+.form-actions {
+	margin-bottom:0;
+}
 #log_start_end label {font-weight:bold;margin-right:20px;}
 
 .footer {
+  font-size: 12px;
 	margin-top:40px;
 	border-top:1px solid $grayLighter;
 	padding:20px 0;
