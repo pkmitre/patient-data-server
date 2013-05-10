@@ -9,6 +9,14 @@ FactoryGirl.define do
     trait :with_lab_results do
       results {|r| [r.association(:lab_result)]}
     end
+
+    trait :with_studies do
+      after :create do |r|
+        r.studies.create(description: "Study Description")
+        dicom_file = File.read("test/fixtures/test_image.dcm")
+        r.studies.first.images.create(data: dicom_file, series_description: "Series Description", instance_number: 1)
+      end
+    end
   end
   
   factory :lab_result do
@@ -18,7 +26,6 @@ FactoryGirl.define do
     values {[FactoryGirl.build(:physical_quantity_result_value)]}
     reference_range '70 mg/dL - 160 mg/dL'
   end
-
 
   factory :audit_log do
     requester_info "NONE"
