@@ -1,6 +1,6 @@
 atom_feed root_url: images_url(@record.medical_record_number, @study)do |feed|
   @images.each do |image|
-    feed.entry(image, url: image_url(@record.medical_record_number, @study, image, format: 'dcm')) do |entry|
+    feed.entry(image, url: image_url(@record.medical_record_number, @study, image)) do |entry|
       entry.link rel: "alternate", type: 'image/dcm', href: image_url(@record.medical_record_number, @study, image, format: 'dcm')
       entry.title "#{image.series_description} ##{image.instance_number}"
       entry.series_description image.series_description
