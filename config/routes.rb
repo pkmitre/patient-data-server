@@ -64,9 +64,8 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put
-
+  match "records/:record_id/:section/:id" => "entries#update_metadata", :as => :update_metadata, :via => :post
   root :to =>  "records#index"
-
 
   match "users/:id/make_admin"   => "users#make_admin",   :method => :get
   match "users/:id/remove_admin" => "users#remove_admin", :method => :get

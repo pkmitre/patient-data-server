@@ -56,6 +56,7 @@ class EntriesControllerTest < AtomTest
     assert_equal 135, result.values.first.scalar
   end
 
+  # need to add JSON support
   # test "post a new result section document as json" do
   #   assert_equal 1, @record.results.count
 
@@ -87,6 +88,15 @@ class EntriesControllerTest < AtomTest
 
     assert_not_nil result.document_metadata
     assert_response 201
+  end
+
+  test "update metadata" do
+    result = @record.results.first
+    result.create_document_metadata
+    request.env['RAW_POST_DATA'] = File.read(Rails.root.join('test/fixtures/metadata.xml'))
+    post :update_metadata, {record_id: @record.medical_record_number, section: 'results', id: result.id}
+    result.reload
+    assert_equal "Sample Provider, Inc.", result.document_metadata.pedigrees.first.organization
   end
   
   test "update a lab result" do

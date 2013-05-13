@@ -79,12 +79,17 @@ class RecordsControllerTest < AtomTest
   end
 
   test "get records show Atom feed" do
+    @record = FactoryGirl.create(:record)
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
-    do_show_atom_feed "4f4e6eb7069d454d16000001", 12
+    # do_show_atom_feed @record.id, 12
+    get :show, id: @record.medical_record_number
+    assert_atom_success
   end
 
   test "get records show Atom feed (no accepts header)" do
-    do_show_atom_feed "4f4e6eb7069d454d16000001", 12
+    @record = FactoryGirl.create(:record)
+    get :show, id: @record.medical_record_number
+    assert_atom_success
   end
 
   test "check for 404 on non-existent record on show" do

@@ -5,7 +5,7 @@ require 'section_registry'
 ############################################################## 
 sr = SectionRegistry.instance
 
-sr.add_section('allergies', 'http://projecthdata.org/extension/advance_directive', 'Advance Directives') do |importers, exporters|
+sr.add_section('advance_directive', 'http://projecthdata.org/extension/advance_directive', 'Advance Directives') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::AdvanceDirectiveImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:advance_directive)
 end

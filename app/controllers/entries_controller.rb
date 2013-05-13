@@ -1,6 +1,5 @@
 class EntriesController < HdataController
-  before_filter :audit_log
-  before_filter :find_entry, except: [:index, :create]
+
 
   skip_before_filter :verify_authenticity_token
 
@@ -47,12 +46,5 @@ class EntriesController < HdataController
     @entry.destroy
     render nothing: true, status: 204
   end
-
-  private
-
-  def find_entry
-    @entry = @record.send(@section_name).where(id: params[:id]).first if Moped::BSON::ObjectId.legal?(params[:id])
-    not_found unless @entry
-  end
-
+  
 end
