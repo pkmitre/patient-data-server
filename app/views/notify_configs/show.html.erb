@@ -1,42 +1,40 @@
-<p id="notice"><%= notice %></p>
+<% if notice %><p id="notice" class="alert alert-info"><%= notice %></p><% end %>
 
+<h3>Notification Configuration</h3>
+
+<table class="table table-condensed table-noborders">
+	<tbody>
+  	<tr>
+      <td style="width:10em"><strong>User</strong></td>
+			<td><%= @notify_config.user %></td>
+		</tr>
+		<tr>
+    	<td><strong>Interval</strong></td>
+			<td><%= @notify_config.interval %></td>
+	  </tr> 
+		<tr>
+    	<td><strong>Action</strong></td>
+			<td><%= @notify_config.action %></td>
+	  </tr> 
+		<tr>
+    	<td><strong>Alert out1</strong></td>
+			<td><%= @notify_config.alert_out1 %></td>
+	  </tr> 
+		<tr>
+    	<td><strong>Alert out2</strong></td>
+			<td><%= @notify_config.alert_out2 %></td>
+	  </tr> 
+		<tr>
+    	<td><strong>Alert out3</strong></td>
+			<td><%= @notify_config.alert_out3 %></td>
+	  </tr> 
+		<tr>
+    	<td><strong>Alert out4</strong></td>
+			<td><%= @notify_config.alert_out4 %></td>
+		</tr>
+	</tbody>
+</table>
 <p>
-  <b>User:</b>
-  <%= @notify_config.user %>
+	<%= link_to 'Edit', edit_notify_config_path(@notify_config), :class=>"btn btn-primary" %>
+	<%= link_to 'Back', notify_configs_path, :class=>"btn" %>
 </p>
-
-<p>
-  <b>Interval:</b>
-  <%= @notify_config.interval %>
-</p>
-
-<p>
-  <b>Action:</b>
-  <%= @notify_config.action %>
-</p>
-
-<p>
- <b>Alert out1:</b>
- <%= @notify_config.alert_out1 %>
-</p>
-
-
-<p>
- <b>Alert out2:</b>
-<%= @notify_config.alert_out2 %>
-</p>
-
-<p>
- <b>Alert out3:</b>
-<%= @notify_config.alert_out3 %>
-</p>
-
-
-<p>
- <b>Alert out4:</b>
-<%= @notify_config.alert_out4 %>
-</p>
-
-
-<%= link_to 'Edit', edit_notify_config_path(@notify_config) %> |
-<%= link_to 'Back', notify_configs_path %>

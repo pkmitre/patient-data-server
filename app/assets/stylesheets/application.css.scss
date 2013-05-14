@@ -1,157 +1,105 @@
-@import "common";
-@import "header";
+@import "bootstrap";
 
 /*
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
- *= require_tree .
+ * require_tree .
 */
 
-body {
-  background-color: $bg;
-  font-family: $basic-font-family-list;
-  font-size: $basic-font-size;
-  margin: 0px;
-  padding: 0px;
-  padding-left: $gutter;
-  padding-right: $gutter;
+/* tweak headline font sizes down a notch */
+h1,
+h2,
+h3 { line-height: $baseLineHeight * 2; }
+
+h1 { font-size: $baseFontSize * 2.25; } // ~38px
+h2 { font-size: $baseFontSize * 2.00; } // ~32px
+h3 { font-size: $baseFontSize * 1.5; } // ~24px
+h4 { font-size: $baseFontSize * 1.25; } // ~18px
+h5 { font-size: $baseFontSize; }
+h6 { font-size: $baseFontSize * 0.85; } // ~12px
+
+h1 small { font-size: $baseFontSize * 1.75; } // ~24px
+h2 small { font-size: $baseFontSize * 1.25; } // ~18px
+h3 small { font-size: $baseFontSize; }
+h4 small { font-size: $baseFontSize; }
+
+$out-of-range-value: red;
+
+.record .out-of-range-value {
+    color: $out-of-range-value;
 }
 
-a img {
-  border: none;
+/* header styles */
+#logo {
+	font-weight:bold;
+	color:$grayDarker;
+}
+#user {
+	font-size:17px;
+	margin-left:20px;
+}
+.breadcrumb {
+	background-color:transparent;
+	padding-left:$gridGutterWidth;
+}
+.navbar .nav > li {
+	line-height:26px;
 }
 
-a {
-  color: #0000FF;
+
+
+table.patient-records {
+	th:first-child, th:first-child { 
+		width:2em;
+	}
+	td {
+		border:none;
+	}
 }
 
-.clear {
-  clear: both;
-  height: 0;
-  overflow: hidden;
-}
+table.table.table-noborders td {border:none}
 
-#container {
-  width: 75%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px;
+dl.dl-horizontal{
+	margin-bottom:5px;
+  dt {
+	  text-align:left;
+	  width:310px;
+	  .lab_value {font-weight:normal;color:#393;padding-left:10px}
+	}
+	dd {
+		text-align:right;
+	}
 }
-
-#flash_notice, #flash_error, #flash_alert {
-  clear: both;
-  padding: 5px 8px;
-  margin: 10px 0;
-  width: 400px;
+.form-horizontal .control-group {
+	margin-bottom:10px;
+	.controls p {
+		margin-bottom:5px;
+		margin-top:5px;
+	}
 }
+.span8 dl.dl-horizontal dt {width:420px}
 
-#flash_notice {
-  background-color: #CFC;
-  border: solid 1px #6C6;
-}
-
-#flash_error, #flash_alert {
-  background-color: #FCC;
-  border: solid 1px #C66;
-}
-
-.fieldWithErrors {
-  display: inline;
-}
-
-.error_messages {
-  width: 400px;
-  border: 2px solid #CF0000;
-  padding: 0px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  font-size: 12px;
-}
-
-.error_messages h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 10px;
-  font-size: 12px;
-  margin: 0;
-  background-color: #c00;
-  color: #fff;
-}
-
-.error_messages p {
-  margin: 8px 10px;
-}
-
-.error_messages ul {
-  margin: 0;
-}
-
-#user_nav {
-  float: right;
-  margin-bottom: 10px;
-}
-
-.authentications {
-  margin-bottom: 30px;
-}
-
-.authentication {
-  width: 130px;
-  float: left;
-  background-color: #EEE;
-  border: solid 1px #999;
-  padding: 5px 10px;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
+.form-set {
   position: relative;
-  margin-right: 10px;
+  margin: 15px 0;
+  padding: 19px 0 0 0;
+  *padding-top: 19px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
 }
-
-.authentication .remove {
-  text-decoration: none;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  color: #333;
-  padding: 2px 4px;
-  font-size: 10px;
+.form-actions {
+	margin-bottom:0;
 }
+#log_start_end label {font-weight:bold;margin-right:20px;}
 
-.authentication .remove:hover {
-  color: #CCC;
-  background-color: #777;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
+.footer {
+  font-size: 12px;
+	margin-top:40px;
+	border-top:1px solid $grayLighter;
+	padding:20px 0;
 }
-
-.authentication img {
-  float: left;
-  margin-right: 10px;
-}
-
-.authentication .provider {
-  font-weight: bold;
-}
-
-.authentication .uid {
-  color: #666;
-  font-size: 11px;
-}
-
-.auth_provider img {
-  display: block;
-}
-
-.auth_provider {
-  float: left;
-  text-decoration: none;
-  margin-right: 20px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-

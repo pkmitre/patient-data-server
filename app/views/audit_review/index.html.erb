@@ -1,8 +1,7 @@
-<%= stylesheet_link_tag :audit_reiew %>
 <div class="log_shell">
 <h1>Audit Doc Review</h1>
 
-<table id="log_table">
+<table id="log_table" class="table">
   <tr>
     <th><%= link_to 'Timestamp', time_range_params_plus(:sort => 'created_at', :order => 'desc') %></th>
     <th><%= link_to 'Requester Info', time_range_params_plus(:sort => 'requester_info', :order => 'desc') %></th>

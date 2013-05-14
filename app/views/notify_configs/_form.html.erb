@@ -1,6 +1,7 @@
-<%= form_for(@notify_config) do |f| %>
+
+<%= form_for(@notify_config, :html=>{:class=>"form-horizontal form-set"}) do |f| %>
   <% if @notify_config.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-error">
       <h2><%= pluralize(@notify_config.errors.count, "error") %> prohibited this notify_config from being saved:</h2>
 
       <ul>
@@ -11,35 +12,37 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :user %>
-    <%= f.text_field :user, :value => @current_user.email %>
- </div>
-  <div class="field">
-    <%= f.label :interval %>
-   <%= f.select :interval, NotifyConfig.get_interval_values, :prompt => 'Select...'  %>
-</div>
-  <div class="field">
-    <%= f.label :action %>
-    <%= f.select :action, NotifyConfig.get_action_values, :prompt => 'Select...'  %>
- </div>
-  <div class="field">
-   <%= f.label :alert_out1 %>
-  <%= f.select :alert_out1, NotifyConfig.get_alert_out1_values, :prompt => 'Select...'  %>
-</div>
-  <div class="field">
-   <%= f.label :alert_out2 %>
-  <%= f.select :alert_out2, NotifyConfig.get_alert_out2_values, :prompt => 'Select...'  %>
-</div>
-  <div class="field">
-   <%= f.label :alert_out3 %>
-  <%= f.select :alert_out3, NotifyConfig.get_alert_out3_values, :prompt => 'Select...'  %>
-</div>
-  <div class="field">
-   <%= f.label :alert_out4 %>
-  <%= f.select :alert_out4, NotifyConfig.get_alert_out4_values, :prompt => 'Select...'  %>
-</div>
- <div class="actions">
-    <%= f.submit %>
+  <div class="control-group">
+    <%= f.label :user, :class=>"control-label" %>
+    <div class="controls"><%= f.text_field :user, :value => @current_user.email %></div>
+  </div>
+  <div class="control-group">
+    <%= f.label :interval, :class=>"control-label" %>
+    <div class="controls"><%= f.select :interval, NotifyConfig.get_interval_values, :prompt => 'Select...'  %></div>
+  </div>
+  <div class="control-group">
+    <%= f.label :action, :class=>"control-label" %>
+    <div class="controls"><%= f.select :action, NotifyConfig.get_action_values, :prompt => 'Select...'  %></div>
+  </div>
+  <div class="control-group">
+   <%= f.label :alert_out1, :class=>"control-label" %>
+   <div class="controls"><%= f.select :alert_out1, NotifyConfig.get_alert_out1_values, :prompt => 'Select...'  %></div>
+  </div>
+  <div class="control-group">
+   <%= f.label :alert_out2, :class=>"control-label" %>
+   <div class="controls"><%= f.select :alert_out2, NotifyConfig.get_alert_out2_values, :prompt => 'Select...'  %></div>
+  </div>
+  <div class="control-group">
+   <%= f.label :alert_out3, :class=>"control-label" %>
+   <div class="controls"><%= f.select :alert_out3, NotifyConfig.get_alert_out3_values, :prompt => 'Select...'  %></div>
+  </div>
+  <div class="control-group">
+   <%= f.label :alert_out4, :class=>"control-label" %>
+   <div class="controls"><%= f.select :alert_out4, NotifyConfig.get_alert_out4_values, :prompt => 'Select...'  %></div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Save", :class=>"btn btn-primary" %>
+    <%= link_to 'Cancel', notify_configs_path, :class=>"btn" %>
+  </div>
   </div>
 <% end %>
