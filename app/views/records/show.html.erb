@@ -79,5 +79,5 @@
     </tr>
   </table>
 
-  <div class="footer">Last updated on <%= @record.updated_at.strftime("%m/%d/%Y") %> by <a href='link'>Dr Rick Jones</a> (<%=link_to "Refresh", record_path(@record.medical_record_number), method: :get %>)</div>
+  <div class="footer">Last updated on <%= @record.updated_at.try(:strftime, "%m/%d/%Y") %> by <a href='link'>Dr Rick Jones</a> (<%=link_to "Refresh", record_path(@record.medical_record_number), method: :get %>)</div>
 </div>
