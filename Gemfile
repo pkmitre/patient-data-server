@@ -37,7 +37,7 @@ end
 
 group :test do
   gem 'turn', :require => false
-  gem 'minitest'
+  gem "minitest", "~> 4.0"
   gem 'feedzirra'
   gem 'cover_me'
   gem 'factory_girl_rails'
