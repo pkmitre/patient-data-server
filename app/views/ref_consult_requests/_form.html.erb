@@ -1,4 +1,4 @@
-<%= form_for(@ref_consult_request) do |f| %>
+<%= form_for(@ref_consult_request, :html=>{:class=>"form-horizontal form-set"}) do |f| %>
   <% if @ref_consult_request.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@ref_consult_request.errors.count, "error") %> prohibited this ref_consult_request from being saved:</h2>
@@ -11,135 +11,70 @@
     </div>
   <% end %>
 
-<table>
-  <tr>
-    <div class="field">
-      <td><%= f.label :Date %> </td>
-      <td><%= @ref_consult_request.refDate %> </td>
+  <div class="control-group">
+    <%= f.label :user, :class=>"control-label" %>
+    <div class="controls"><%= f.text_field :user, :value => @current_user.email %></div>
+  </div>
+
+    <div class="control-group">
+      <%= f.label :Date, :class=>"control-label" %>
+      <div class="controls"><p><%= @ref_consult_request.refDate %></p></div>
       <%= f.hidden_field :refDate, :value => @ref_consult_request.refDate %>
-
     </div>
-    <div class="field">
-      <td><%= f.label "Status:" %> </td>
-      <td><%= @ref_consult_request.status %> </td>
+    <div class="control-group">
+      <%= f.label "Status", :class=>"control-label" %>
+      <div class="controls"><p><%= @ref_consult_request.status %></p></div>
     </div> 
-  </tr> 
+		<div class="control-group">
+			<%= f.label :refNumber, :class=>"control-label" %>
+			<div class="controls"><p><%= @ref_consult_request.refNumber %></p></div>
+			<%= f.hidden_field :refNumber, :value => @ref_consult_request.refNumber %>
+  	</div> 
+		<div class="control-group">
+    	<%= f.label :priority, :class=>"control-label" %>
+    	<div class="controls"><%= f.select :priority, RefConsultRequest.get_priority_values,   :prompt => 'Select...' %> </div>
+		</div> 
+		<div class="control-group">
+   		<%= f.label "Reason", :class=>"control-label" %>
+			<div class="controls"><%= f.text_field :reasonText %> </div>
+		</div> 
 
-<!--   <tr><div class="field">
-    <td><%= f.label :disposition %> </td>
-    <td><%= f.text_field :disposition %> </td>
-  </div> --> 
-</tr>
-  <tr><div class="field">
-    <td><%= f.label :refNumber %> </td>
-    <td><%= @ref_consult_request.refNumber %> </td>
-    <%= f.hidden_field :refNumber, :value => @ref_consult_request.refNumber %>
+	  <%= f.hidden_field :patientRecordId, :value => @ref_consult_request.patientRecordId %>
+  	<div class="control-group">
+	    <%= f.label "Patient Name", :class=>"control-label" %>
+  	 	<div class="controls"><p><%= (@record.last.upcase + ',&nbsp;' + @record.first).html_safe  if @record %></p></div>
+	  </div> 
+		<div class="control-group">
+		 <%= f.label "Insurance", :class=>"control-label" %>
+		 <div class="controls"><p><span class="muted">--</span></p></div>
+		</div> 
+		<div class="control-group">
+			<%= f.label "Gender", :class=>"control-label" %>
+ 			<div class="controls"><p><%= (@record.gender).html_safe   if @record %></p></div>
+		</div> 
+  <div class="control-group">
+ 		<%= f.label "Age", :class=>"control-label" %>
+		<div class="controls"><p><%= getAgeText(@record.birthdate).html_safe if @record %></p></div>
+	</div>
+  <div class="control-group">
+    <%= f.label "Conditions", :class=>"control-label" %>
+    <div class="controls"><%= f.select :reasonConditionId, [ "DJD/Osteoarthritis, spine", "Diabetes Mellitus, Non-Insulin Dependent"],   :prompt => 'Select...' %> </div>
+	</div> 
+	<div class="control-group">
+  	<%= f.label "Specialty", :class=>"control-label" %>
+  	<div class="controls"><%= f.select :requestedSpecialty,  RefConsultRequest.get_requestedSpecialty_values,   :prompt => 'Select Specialty...' %> </div>
+	</div> 
+	<div class="control-group">
+  	<%= f.label "Specialist", :class=>"control-label" %>
+  	<div class="controls"><%= f.select :requestedConsultingProviderId, [ "Dr. Bill Schwartz", "Dr. Tom Jones"],   :prompt => 'Select...' %> </div>
+	</div> 
+  <div class="control-group">
+    <%= f.label :Description, :class=>"control-label" %>
+    <div class="controls"><%= f.text_area :reasonDescription, :rows => "5", :class=>"input input-xxlarge"  %></div>
   </div> 
-</tr>
-
-  <tr><div class="field">
-    <td><%= f.label :priority %> </td>
-    <td><%= f.select :priority, RefConsultRequest.get_priority_values,   :prompt => 'Select...' %> </td>
-</div> 
-</tr>
-
-  <tr><div class="field">
-   <td><%= f.label "Reason" %> </td> 
-   <td><%= f.text_field :reasonText %> </td>
- </div> 
-</tr>
-
-
-  <%= f.hidden_field :patientRecordId, :value => @ref_consult_request.patientRecordId %>
-  <tr><div class="field">
-    <td>Patient Name: &nbsp; &nbsp; &nbsp;</td>
-   <td><%= (@record.last.upcase + ',&nbsp;' + @record.first).html_safe  if @record %></td>
-  </div> 
-</tr>
-
-  <tr><div class="field">
- <td>Insurance:</td>
- <td></td>
-</div> 
-</tr>
-
-  <tr><div class="field">
- <td>Gender:</td>
- <td><%= (@record.gender).html_safe   if @record %></td>
-
-</div> 
-</tr>
-
-  <tr><div class="field">
- <td>Age:</td>
-<td><%= getAgeText(@record.birthdate).html_safe if @record %> </td>
-</div> 
-</tr>
-
- <tr><div class="field">
-    <td><%= f.label "Conditions:" %> </td>
-    <td><%= f.select :reasonConditionId, [ "DJD/Osteoarthritis, spine", "Diabetes Mellitus, Non-Insulin Dependent"],   :prompt => 'Select...' %> </td>
-</div> 
-</tr>
-
- <tr><div class="field">
-  <td><%= f.label "Specialty:" %> </td>
-  <td><%= f.select :requestedSpecialty,  RefConsultRequest.get_requestedSpecialty_values,   :prompt => 'Select Specialty...' %> </td>
-</div> 
-</tr>
-
-  <tr><div class="field">
-  <td><%= f.label "Specialist:" %> </td>
-  <td><%= f.select :requestedConsultingProviderId, [ "Dr. Bill Schwartz", "Dr. Tom Jones"],   :prompt => 'Select...' %> </td>
-</div> 
-</tr>
-
-<!--  <tr><div class="field">
-    <td><%= f.label :refType %> </td>
-    <td><%= f.text_field :refType %> </td>
-  </div> 
-</tr>
-  <tr><div class="field">
-    <td><%= f.label :procedureId %> </td>
-    <td><%= f.number_field :procedureId %> </td>
-  </div> 
-</tr>
--->
-  <tr><div class="field">
-    <td><%= f.label :Description %> </td>
-    <td><%= f.text_area :reasonDescription, :size => "10x5", :style=>"width:150%"  %></td>
- </div> 
-
-<!-- </tr>
-  <tr><div class="field">
-    <td><%= f.label :category %> </td>
-    <td><%= f.text_field :category %> </td>
-  </div> 
-</tr>
-  <tr><div class="field">
-    <td><%= f.label :requestedNumTreatments %> </td>
-    <td><%= f.number_field :requestedNumTreatments %> </td>
-  </div> 
-</tr>
-  <tr><div class="field">
-    <td><%= f.label :requestProviderId %> </td>
-    <td><%= f.number_field :requestProviderId %> </td>
-  </div> 
-</tr>
-  <tr><div class="field">
-    <td><%= f.label :comment %> </td>
-    <td><%= f.text_field :comment %> </td>
-  </div> 
-</tr> -->
-
-<tr>
-  <div class="actions">
-    <td></td>
-   <td><%= f.submit 'Submit', :disable_with => "creating now..." %>
-   <%= link_to 'Cancel', ref_consult_requests_path %>  </td>
-</div>
-</tr>
-
-</table>
+  <div class="form-actions">
+    <%= f.submit 'Submit', :disable_with => "creating now...", :class=>"btn btn-primary" %>
+    <%= link_to 'Cancel', ref_consult_requests_path, :class=>"btn" %>
+	</div>
 
 <% end %> 

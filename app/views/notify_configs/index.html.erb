@@ -1,7 +1,7 @@
 <h1> <%= @title %> </h1>
 
 
-<table>
+<table class="table">
   <tr>
     <th>User</th>
     <th>Interval</th>
@@ -31,6 +31,6 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Notify config', new_notify_config_path %>
+<p>
+	<%= link_to 'New Notification', new_notify_config_path, :class=>"btn" %>
+</p>

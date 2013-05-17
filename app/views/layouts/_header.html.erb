@@ -7,16 +7,32 @@
      end
    end
  %>
-<div id="page_header">
-  <% unless current_user.nil? || current_user.username.nil? %>
-  <a href="/users/sign_out">Logout</a>
-  <a href="/settings">Settings</a>
-  <a href="/audit_logs">Audit Log</a>
-  <a href="/notifications">Alerts</a>
-  <% end %>
-  <span id="logo">Patient Data Server</span>
- <% unless current_user.nil? || current_user.username.nil? %>
-  <span id="user">Welcome, <%= current_user.username %></span>
-  <% end %>
+<div id="page_header" class="navbar navbar-static-top">
+<div class="navbar-inner">
+	<div class="container">
+		<div class="brand">
+			<span id="logo">Patient Data Server</span>
+			<% unless current_user.nil? || current_user.username.nil? %>
+				<span id="user">Welcome, <%= current_user.username %></span>
+			<% end %>
+		</div>
+		<div class="nav-collapse collapse">
+			<% unless current_user.nil? || current_user.username.nil? %>
+				<nav>
+					<ul class="nav pull-right">
+						<li><a href="/users/sign_out">Logout</a></li>
+						<li><a href="/settings">Settings</a></li>
+						<li><a href="/audit_logs">Audit Log</a></li>
+						<li><a href="/notifications">Alerts</a></li>
+					</ul>
+				</nav>
+			<% end %>
+		</div>
+  </div>
+  </div>
 </div>
-<div id='breadcrumbs'><%= show_breadcrumbs %></div>
+<div class="container">
+	<div class="row">
+	<div id='breadcrumbs'><%= show_breadcrumbs %></div>
+	</div>
+</div>

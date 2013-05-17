@@ -1,21 +1,23 @@
 module ApplicationHelper
   # Expand the breadcrumbs from the controller into a breadcrumbs bar
   def show_breadcrumbs
-    rval = ""
+    rval = "<ul class='breadcrumb'>"
     breadcrumbs.each do |x|
-      rval += "&nbsp;|&nbsp;" if rval.length > 0
       if x[:link].nil?
         rval += x[:title]
       else
-        rval += "<a href='#{x[:link]}'>#{x[:title]}</a>"
+        rval += "<li><a href='#{x[:link]}'>#{x[:title]}</a>"
+        rval += "<span class='divider'>/</span>" if rval.length > 23
+				rval += "</li>"
       end
     end
+    rval += "</ul>"
     rval.html_safe
   end
 
   # Create a field/value combination that can be styled
-  def labeled_field(label, value, field_class = 'labeled_field')
-    ("<div class='" + field_class + "'><span class='label'>#{label}</span><span class='value'>#{value}</span></div>").html_safe
+  def labeled_field(label, value)
+		("<dt>#{label}</dt> <dd>#{value}</dd>").html_safe
   end
 
   def getAgeText(birthdate)
