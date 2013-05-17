@@ -6,7 +6,7 @@ class RecordsController < ApplicationController
   def index
     @records = Record.all
     audit_log "record_index", nil
-
+    fresh_when(last_modified: @records.max(:updated_at))
     respond_to(:atom, :html)
   end
   

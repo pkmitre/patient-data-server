@@ -10,19 +10,20 @@ class EntriesController < HdataController
 
   def index
     @entries = @record.send(@section_name)
+    fresh_when(last_modified: @entries.max(:updated_at))
     respond_with(@entries)
   end
   
   def show
     ## TODO need to auditlog the actual record content
-
-    respond_to do |wants|
-      wants.json {render :json => @entry.attributes}
-      wants.xml do
-        exporter = @extension.exporters['application/xml']
-        render :xml => exporter.export(@entry)
+    if stale?(last_modified: @entry.updated_at, etag: @entry)
+      respond_to do |wants|
+        wants.json {render :json => @entry.attributes}
+        wants.xml do
+          exporter = @extension.exporters['application/xml']
+          render :xml => exporter.export(@entry)
+        end
       end
-      wants.html { }
     end
   end
 
