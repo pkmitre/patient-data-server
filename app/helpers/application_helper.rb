@@ -4,11 +4,11 @@ module ApplicationHelper
     rval = "<ul class='breadcrumb'>"
     breadcrumbs.each do |x|
       if x[:link].nil?
-        rval += x[:title]
+        rval += "<li>#{x[:title]}</li>"
       else
         rval += "<li><a href='#{x[:link]}'>#{x[:title]}</a>"
         rval += "<span class='divider'>/</span>" if rval.length > 23
-				rval += "</li>"
+        rval += "</li>"
       end
     end
     rval += "</ul>"
@@ -17,12 +17,11 @@ module ApplicationHelper
 
   # Create a field/value combination that can be styled
   def labeled_field(label, value)
-		("<dt>#{label}</dt> <dd>#{value}</dd>").html_safe
+    ("<dt>#{label}</dt> <dd>#{value}</dd>").html_safe
   end
 
   def getAgeText(birthdate)
-      return "Forever Young"     if birthdate.nil?
-    
+    return "Forever Young" if birthdate.nil?
     bdate = Time.at(birthdate) if (birthdate.class == Fixnum) 
     return date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)"
   end

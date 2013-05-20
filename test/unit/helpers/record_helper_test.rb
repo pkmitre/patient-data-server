@@ -40,7 +40,7 @@ class RecordHelperTest < ActionView::TestCase
     vs3 = FactoryGirl.create(:lab_result)
     rec.vital_signs.concat([ vs1, vs2, vs3 ])
     v = latest_matching_vital rec, 'ldl'
-    assert_equal "<span class='lab_value'>127 (mg/dL)</span>", v
+    assert_equal " <span class='lab_value'>127 (mg/dL)</span>", v
 
     v = latest_matching_vital rec, 'xyz'
     assert_equal "", v
@@ -59,19 +59,19 @@ class RecordHelperTest < ActionView::TestCase
 
   test "format a value" do
     r = FactoryGirl.create(:lab_result)
-    assert_equal "<span class='lab_value'>127 (mg/dL)</span>", show_value(r.values.first)
+    assert_equal " <span class='lab_value'>127 (mg/dL)</span>", show_value(r.values.first)
   end
 
   test "format a value 2" do
-    assert_equal "<span class='lab_value'>127</span>", show_value(OpenStruct.new('scalar' => 127))
+    assert_equal " <span class='lab_value'>127</span>", show_value(OpenStruct.new('scalar' => 127))
   end
 
   test "format a value 3" do
-    assert_equal "<span class='lab_value'>127.12</span>", show_value(OpenStruct.new('scalar' => 127.12345))
+    assert_equal " <span class='lab_value'>127.12</span>", show_value(OpenStruct.new('scalar' => 127.12345))
   end
 
   test "format a value 4" do
-    assert_equal "<span class='lab_value'>127.12</span>", show_value(OpenStruct.new('scalar' => "127.12345"))
+    assert_equal " <span class='lab_value'>127.12</span>", show_value(OpenStruct.new('scalar' => "127.12345"))
   end
 
   test "format a value 5" do
