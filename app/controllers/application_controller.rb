@@ -71,6 +71,15 @@ class ApplicationController < ActionController::Base
 
   end
 
+  # Log action, along with record_id, section, and id from params, plus any optional params (which overwrite
+  # the default params if there are duplicates)
+  def audit_log(action, optional_params = {})
+    description = params.slice(:record_id, :section, :id).merge(optional_params).map { |key, value| "#{key}:#{value}"}.join('|')
+    requester = current_user.try(:email) || 'NONE'
+    AuditLog.create(event: action, description: description, requester_info: requester)
+    description
+  end
+
   # Check the accepts header and defaults the format to request an atom feed
   # apply to a controller using a before filter
   def default_format_to_atom

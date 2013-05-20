@@ -94,14 +94,4 @@ class EntriesController < ApplicationController
     end
   end
 
-  def audit_log(action)
-    return if current_user.nil?
-
-    desc = ""
-    desc = "record_id:#{params[:record_id]}" if params[:record_id]
-    desc += "|section:#{params[:section]}" if params[:section]
-    desc += "|id:#{params[:id]}" if params[:id]
-    AuditLog.create(requester_info: current_user.email, event: action, description: desc)
-  end
-
 end
