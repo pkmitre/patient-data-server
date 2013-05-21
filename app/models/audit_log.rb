@@ -99,8 +99,6 @@ class AuditLog
     ## to_yaml ... sometime bombs out with -  can't dump anonymous class Class, replace with inspect
     serialized = obj.inspect
 
-
-    sig = ""
     sig = Digest::SHA1.hexdigest serialized
 
     AuditLog.create(requester_info: requester_info, 

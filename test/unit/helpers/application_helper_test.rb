@@ -2,8 +2,7 @@ require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
   test "labeled field" do
-    assert_equal "<dt>foo</dt> <dd>bar</dd>",
-                 labeled_field("foo", "bar")
+    assert_equal "<dt>foo</dt> <dd>bar</dd>", labeled_field("foo", "bar")
   end
 
   test "date_formatter" do
@@ -19,7 +18,7 @@ class ApplicationHelperTest < ActionView::TestCase
     @bc = [:title => "abc", :link => "/"]
     assert_equal "<ul class='breadcrumb'><li><a href='/'>abc</a><span class='divider'>/</span></li></ul>", show_breadcrumbs
     @bc = [{:title => "abc", :link => "/"}, {:title => "def"}]
-    assert_equal "<ul class='breadcrumb'><li><a href='/'>abc</a><span class='divider'>/</span></li>def</ul>", show_breadcrumbs
+    assert_equal "<ul class='breadcrumb'><li><a href='/'>abc</a><span class='divider'>/</span></li><li>def</li></ul>", show_breadcrumbs
   end
 
   def breadcrumbs

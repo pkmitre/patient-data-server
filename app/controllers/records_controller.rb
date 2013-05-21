@@ -5,8 +5,9 @@ class RecordsController < ApplicationController
 
   def index
     @records = Record.all
-    audit_log "record_index", nil
+    audit_log "record_index"
     fresh_when(last_modified: @records.max(:updated_at))
+
     respond_to(:atom, :html)
   end
   
@@ -18,7 +19,7 @@ class RecordsController < ApplicationController
     doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
     patient_data = HealthDataStandards::Import::C32::PatientImporter.instance.parse_c32(doc)
     patient_data.save!
-    audit_log "record_create", patient_data.medical_record_number
+    audit_log "record_create", id: patient_data.medical_record_number
 
     response['Location'] = record_url(id: patient_data.medical_record_number)
     render :text => 'success', :status => 201
@@ -35,12 +36,15 @@ class RecordsController < ApplicationController
   end
 
   def show
-    desc = audit_log "record_access", nil
+    desc = audit_log "record_access"
 
     if current_user
       AuditLog.doc(current_user.email, "record_access", desc, @record, @record.version)
     end
-    fresh_when(@record)
+
+    if stale?(:last_modified => @record.updated_at.utc, :etag => @record)
+      respond_to(:atom, :html)
+    end
   end
 
   def set_breadcrumbs
@@ -52,16 +56,4 @@ class RecordsController < ApplicationController
     # handled by the find_record before filter
   end
 
- def audit_log(action, id)
-   return if current_user.nil?
-   
-   desc = ""
-   desc = "record_id:#{params[:record_id]}" if params[:record_id]
-   desc += "|section:#{params[:section]}" if params[:section]
-   desc += "|id:#{params[:id]}" if params[:id]
-   desc += "|id:#{id}" if id
-   AuditLog.create(requester_info: current_user.email, event: action, description: desc)
-   
-   desc
-  end
 end

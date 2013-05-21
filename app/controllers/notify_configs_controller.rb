@@ -25,12 +25,13 @@ class NotifyConfigsController < ApplicationController
     @notify_config = NotifyConfig.find(params[:id])
 
     add_breadcrumb('Notification Configuration')
+
    if stale?(:last_modified => @notify_config.updated_at.utc, :etag => @notify_config)
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @notify_config }
-      end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @notify_config }
     end
+  end
   end
 
   # GET /notify_configs/new
