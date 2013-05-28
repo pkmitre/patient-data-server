@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
     audit_log "record_index"
     fresh_when(last_modified: @records.max(:updated_at))
 
-    respond_to(:atom, :html)
+    respond_to(:html, :atom)
   end
   
   def create
