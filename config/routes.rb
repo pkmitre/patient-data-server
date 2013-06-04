@@ -27,7 +27,6 @@ HdataServer::Application.routes.draw do
   match '/auth/:provider/callback' => 'authentications#create'
   match '/auth/failure' => 'authentications#failure'
 
-  mount Devise::Oauth2Providable::Engine => '/oauth2'
   resources :authentications
 
   # The priority is based upon order of creation:

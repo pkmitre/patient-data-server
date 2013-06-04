@@ -41,6 +41,15 @@ class EntriesControllerTest < AtomTest
     assert_atom_result_count rss, 1
     assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/results/#{@record.results.first.id}"
   end
+
+  test "test metadata" do
+     result = @record.results.first
+     result.build_document_metadata
+     pedigree = Metadata::Pedigree.new(organization: "something")
+     pedigree.build_author(name: "Steve")
+     result.document_metadata.pedigrees << pedigree
+     HealthDataStandards::Export::Hdata::Metadata.new.export(result, result.document_metadata)
+  end
   
   test "post a new result section document" do
     assert_equal 1, @record.results.count
