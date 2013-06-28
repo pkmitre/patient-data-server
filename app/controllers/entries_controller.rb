@@ -1,12 +1,15 @@
+require "oauth2/token_introspection"
+
 class EntriesController < HdataController
+  include OAuth2::TokenAuthorizable
 
-
+  skip_before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
+  before_filter :check_oauth2_authorization
 
   respond_to :html
   respond_to :atom, only: [:index]
   respond_to :json, :xml, except: [:index, :delete]
-
 
   def index
     @entries = @record.send(@section_name)

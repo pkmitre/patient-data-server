@@ -9,12 +9,15 @@ gem "capistrano", "2.13.5"
 gem "nokogiri", '~> 1.5.5'
 gem 'devise'
 
+gem "json-jwt"
+
 gem 'omniauth'
 gem 'omniauth_openid_connect', :git => "https://github.com/project-rhex/omniauth_openid_connect.git"
-gem "omniauth-oauth2"
 
 gem 'kaminari'
 gem "symbolize", :require => "symbolize/mongoid"
+
+gem 'rest-client'
 
 gem 'rmagick'
 gem 'dicom'
@@ -39,6 +42,7 @@ group :development do
 end
 
 group :test do
+  gem "pry"
   gem 'turn', :require => false
   gem "minitest", "~> 4.0"
   gem 'feedzirra'

@@ -10,6 +10,8 @@ class User
   ## Database authenticatable
   field :email,              type: String
   field :encrypted_password, type: String
+  
+  field :permissions, type: Array, default: %w(all)
 
   ## Recoverable
   field :reset_password_token,   type: String
