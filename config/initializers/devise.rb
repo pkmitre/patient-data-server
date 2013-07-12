@@ -1,10 +1,6 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 require 'devise/orm/mongoid'
-require 'omniauth-openid'
-require 'openid/store/filesystem'
-
-Devise.apply_schema = false
 
 Devise.setup do |config|
   # ==> Mailer Configuration
@@ -97,10 +93,6 @@ Devise.setup do |config|
 
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
-
-  # If true, uses the password salt as remember token. This should be turned
-  # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.

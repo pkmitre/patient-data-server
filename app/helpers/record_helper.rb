@@ -50,7 +50,7 @@ module RecordHelper
     scalar = value.scalar
     output = scalar.is_a?(Integer) ? scalar.to_s : number_with_precision(scalar, precision: 2)
     output << " (#{value.units})" if value.units
-    " <span class='lab_value'>#{output}</span>"
+    "<span class='lab_value'>#{output}</span>"
   end
 
 

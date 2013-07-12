@@ -45,7 +45,7 @@ class Record
   end
 
   def to_xml(args)
-    HealthDataStandards::Export::C32.export(self)
+    HealthDataStandards::Export::C32.new.export(self)
   end
   
 end

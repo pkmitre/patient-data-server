@@ -1,4 +1,6 @@
 <h2><%= link_to I18n.t("section." + section.to_s), section_path(@record.medical_record_number, section, format: 'html') %></h2>
+<%= render partial: "shared/import_data", locals: {type: section} %>
+
 <dl class="dl-horizontal <%= section %>">
 <% section_enumerator(record, section) do |x| %>
   <%= yield x %>

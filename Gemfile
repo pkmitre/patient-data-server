@@ -2,21 +2,22 @@ source 'http://rubygems.org'
 
 
 gem 'rails', '3.2.13'
-gem "health-data-standards", '~> 2.0.0'
-gem 'ruby-openid'
-gem "mongoid", '~> 3.0.6'
-gem "pry"
-gem 'pry-nav'
-gem "capistrano"
+gem "health-data-standards",:git => 'https://github.com/projectcypress/health-data-standards.git', branch: 'develop'
+gem "mongoid", '~> 3.1.0'
+
+gem "capistrano", "2.13.5"
 gem "nokogiri", '~> 1.5.5'
 gem 'devise'
-gem 'devise_oauth2_providable', :git => 'https://github.com/project-rhex/devise_oauth2_providable.git' #,:branch => "master" 
-gem 'omniauth_openid_connect', :git => "https://github.com/project-rhex/omniauth_openid_connect.git"
+
+gem "json-jwt"
 
 gem 'omniauth'
-gem 'omniauth-openid'
+gem 'omniauth_openid_connect', :git => "https://github.com/project-rhex/omniauth_openid_connect.git"
+
 gem 'kaminari'
 gem "symbolize", :require => "symbolize/mongoid"
+
+gem 'rest-client'
 
 gem 'rmagick'
 gem 'dicom'
@@ -35,10 +36,15 @@ group :production do
   gem 'thin'
 end
 
+group :development do
+  gem "pry"
+  gem 'pry-nav'
+end
 
 group :test do
+  gem "pry"
   gem 'turn', :require => false
-  gem 'minitest'
+  gem "minitest", "~> 4.0"
   gem 'feedzirra'
   gem 'cover_me'
   gem 'factory_girl_rails'

@@ -1,13 +1,5 @@
 @import "bootstrap";
 
-/*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *= require_self
- * require_tree .
-*/
-
 /* tweak headline font sizes down a notch */
 h1,
 h2,
@@ -36,6 +28,19 @@ $out-of-range-value: red;
 	font-weight:bold;
 	color:$grayDarker;
 }
+
+#main-nav {
+	padding-left:3px;
+	// padding-top:1px;
+	border-radius: 2px;
+	.container {
+		padding-left:0px;
+	}
+
+	a {
+		color: rgb(34, 34, 34);
+	}
+}
 #user {
 	font-size:17px;
 	margin-left:20px;
@@ -47,8 +52,6 @@ $out-of-range-value: red;
 .navbar .nav > li {
 	line-height:26px;
 }
-
-
 
 table.patient-records {
 	th:first-child, th:first-child { 

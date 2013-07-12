@@ -1,0 +1,30 @@
+$navTop: rgb(<%= UI_CONFIG.header_top%>);
+$navBottom: rgb(<%= UI_CONFIG.header_bottom%>);
+
+
+
+#main-nav {
+	background: $navTop; /* Older browsers */
+background: -moz-linear-gradient(top,  $navTop 0%, $navBottom 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$navTop), color-stop(100%,$navBottom)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  $navTop 0%,$navBottom 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  $navTop 0%,$navBottom 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  $navTop 0%,$navBottom 100%); /* IE10+ */
+background: linear-gradient(top,  $navTop 0%,$navBottom 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$navTop', endColorstr='$navBottom',GradientType=0 ); /* IE6-9 */
+
+}
+
+a {
+	color: rgb(<%= UI_CONFIG.link_color%>);
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.pds-logo {
+	float:left; 
+	margin-right:10px;
+	height:50px;
+}

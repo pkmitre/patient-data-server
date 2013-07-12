@@ -8,3 +8,5 @@ tmp/
 coverage*
 .DS_Store
 .rake_tasks
+config/oauth2.yml
+config/ui.yml

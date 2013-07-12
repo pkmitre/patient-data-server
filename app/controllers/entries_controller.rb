@@ -1,97 +1,54 @@
-require "request_error"
+require "oauth2/token_introspection"
 
-class EntriesController < ApplicationController
-  before_filter :set_up_section
-  before_filter :find_record, only: [:show, :update, :delete, :index, :create, :dicom_files, :dicom_file]
-  before_filter :find_entry, only: [:show, :update, :delete, :dicom_files, :dicom_file]
+class EntriesController < HdataController
+  include OAuth2::TokenAuthorizable
+
+  skip_before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
-  def index
-    audit_log "event_index"
+  before_filter :check_oauth2_authorization
 
+  respond_to :html
+  respond_to :atom, only: [:index]
+  respond_to :json, :xml, except: [:index, :delete]
+
+  def index
     @entries = @record.send(@section_name)
-    respond_to do |wants|
-      wants.atom {}
-      wants.html {}
-    end
+    fresh_when(last_modified: @entries.max(:updated_at))
+    respond_with(@entries)
   end
   
   def show
-    audit_log "event_show"
     ## TODO need to auditlog the actual record content
-
-    respond_to do |wants|
-      wants.json {render :json => @entry.attributes}
-      wants.xml do
-        exporter = @extension.exporters['application/xml']
-        render :xml => exporter.export(@entry)
+    if stale?(last_modified: @entry.updated_at, etag: @entry)
+      respond_to do |wants|
+        wants.json {render :json => @entry.attributes}
+        wants.xml do
+          exporter = @extension.exporters['application/xml']
+          render :xml => exporter.export(@entry)
+        end
       end
-      wants.html { }
     end
   end
 
   def create
-    content_type = request.content_type
-    if content_type == "multipart/form-data"
-      audit_log "event_create_multipart"
-      render text: 'Metadata POSTing not yet implemented', status: 400
-    else
-      audit_log "event_create"
-
-      section_document = import_document(content_type)
-      @record.send(@section_name).push(section_document)
-      response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
-      render text: 'Section document created', status: 201
-    end
+    @record.send(@section_name).push(@document)
+    response['Location'] = section_document_url(record_id: @record, section: @section_name, id: @document)
+    render text: 'Section document created', status: 201
   end
   
   def update
-    audit_log "event_update"
-
-    content_type = request.content_type
-    section_document = import_document(content_type)
-    @entry.update_attributes!(section_document.attributes)
+    @entry.update_attributes!(@document.attributes)
     @entry.reflect_on_all_associations(:embeds_many).each do |relation|
       @entry.send(relation.name).destroy_all
-      @entry.send("#{relation.name}=", section_document.send(relation.name))
+      @entry.send("#{relation.name}=", @document.send(relation.name))
     end
     
     render text: 'Document updated', status: 200
   end
 
   def delete
-    audit_log "event_delete"
-
     @entry.destroy
     render nothing: true, status: 204
   end
-
-  private
   
-  def import_document(content_type)
-    importer = @extension.importers[content_type]
-    raw_content = nil
-    if content_type == 'application/xml'
-      raw_content = Nokogiri::XML(request.body.read)
-    end
-    importer.import(raw_content)
-  end
-  
-  def set_up_section
-    @section_name = params[:section]
-    sr = SectionRegistry.instance
-    @extension = sr.extension_from_path(params[:section])
-    unless @extension
-      render text: 'Section Not Found', status: 404
-    end
-  end
-  
-  def find_entry
-    if Moped::BSON::ObjectId.legal?(params[:id])
-      @entry = @record.send(@section_name).where(id: params[:id]).first
-      raise RequestError.new(404, 'Entry Not Found') unless @entry
-    else
-      raise RequestError.new(404, 'Not Found')
-    end
-  end
-
 end

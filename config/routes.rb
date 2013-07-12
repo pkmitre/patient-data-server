@@ -1,8 +1,9 @@
 HdataServer::Application.routes.draw do
 
-  get "vital_sign_callback/access_code"
+  # get "vital_sign_callback/access_code"
+  get "data/access_code"
 
-  resources :vital_sign_hosts
+  # resources :vital_sign_hosts
 
   ##
   resources :ref_consult_requests
@@ -20,6 +21,8 @@ HdataServer::Application.routes.draw do
 
   resources :notify_configs
 
+
+
   get "audit_review/index"
 
   get "audit_review/show"
@@ -27,7 +30,6 @@ HdataServer::Application.routes.draw do
   match '/auth/:provider/callback' => 'authentications#create'
   match '/auth/failure' => 'authentications#failure'
 
-  mount Devise::Oauth2Providable::Engine => '/oauth2'
   resources :authentications
 
   # The priority is based upon order of creation:
@@ -47,7 +49,8 @@ HdataServer::Application.routes.draw do
 
   resources :records do
     resources :c32
-    resources :vital_sign_feeds
+    resources :data
+    # resources :vital_sign_feeds
   end
 
   match "records/:record_id/studies" => "studies#index", :as => :studies, :via => :get
@@ -64,9 +67,8 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put
-
+  match "records/:record_id/:section/:id" => "entries#update_metadata", :as => :update_metadata, :via => :post
   root :to =>  "records#index"
-
 
   match "users/:id/make_admin"   => "users#make_admin",   :method => :get
   match "users/:id/remove_admin" => "users#remove_admin", :method => :get

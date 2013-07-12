@@ -5,13 +5,13 @@ class User
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, 
-         :oauth2_providable, :oauth2_password_grantable, :oauth2_refresh_token_grantable, 
-         :oauth2_authorization_code_grantable
+         :recoverable, :rememberable, :trackable, :validatable
          
   ## Database authenticatable
   field :email,              type: String
   field :encrypted_password, type: String
+  
+  field :permissions, type: Array, default: %w(all)
 
   ## Recoverable
   field :reset_password_token,   type: String
@@ -38,7 +38,8 @@ class User
   field :insurance,          type: String
 
   ## Information to make OAuth 2 requests for vital signs
-  embeds_many :vital_sign_auths, class_name: "VitalSignAuth"
+  # embeds_many :vital_sign_auths, class_name: "VitalSignAuth"
+  embeds_many :remote_auths
 
   symbolize :gender, :in => {
     male:           "Male", 
@@ -97,8 +98,12 @@ class User
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
   
-  def auth_for_feed(vsf)
-    vital_sign_auths.detect { |auth| auth.vital_sign_feed.url.eql?(vsf.url) } || vital_sign_auths.create!(vital_sign_feed: vsf)
+  # def auth_for_feed(vsf)
+  #   vital_sign_auths.detect { |auth| auth.vital_sign_feed.url.eql?(vsf.url) } || vital_sign_auths.create!(vital_sign_feed: vsf)
+  # end
+
+  def auth_for_feed(data)
+    remote_auths.detect { |auth| auth.remote_data.url.eql?(data.url) } || remote_auths.create!(remote_data: data)
   end
   
   def password_required?

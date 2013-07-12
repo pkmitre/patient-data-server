@@ -13,7 +13,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-
+OAUTH2_CONFIG = YAML.load(File.open("config/oauth2.yml"))
 
 module HdataServer
   class Application < Rails::Application

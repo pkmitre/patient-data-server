@@ -6,6 +6,7 @@ class RecordsController < ApplicationController
   def index
     @records = Record.all
     audit_log "record_index"
+    fresh_when(last_modified: @records.max(:updated_at))
 
     respond_to(:atom, :html)
   end
@@ -41,7 +42,7 @@ class RecordsController < ApplicationController
       AuditLog.doc(current_user.email, "record_access", desc, @record, @record.version)
     end
 
-    if stale?(:last_modified => @record.updated_at.utc, :etag => @record)
+    if stale?(:last_modified => @record.updated_at.try(:utc), :etag => @record)
       respond_to(:atom, :html)
     end
   end
