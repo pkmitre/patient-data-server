@@ -57,18 +57,12 @@
 	</div>
 
   <div class="row">
-  	<div class="span8">
+  	<div class="span6">
         <%= render :layout => "section", :locals => {:record => @record, :section => :vital_signs} do |x| %>
           <%= labeled_field("#{x['description']} #{show_values(x.values)}", date(x['time'])) %>
         <% end %>
 </div>
-<div class="span4">
-        <h2>Add Vital Sign Feed</h2>
-        <%= form_for :vital_sign_feed, url: record_vital_sign_feeds_path(@record.medical_record_number),:html=>{:class=>"form-horizontal"}  do |f| %>
-          <%= f.text_field :url %>
-          <%= f.submit "Add", :class=>"btn" %>
-        <% end %>
-        
+<div class="span6">        
          <h2><%= I18n.t("section.vital_signs") %></h2>
         <%= labeled_field 'BMI',  latest_matching_vital(@record, 'BMI')%>
         <%= labeled_field 'Heart Rate',  latest_matching_vital(@record, 'Heart Rate')%>

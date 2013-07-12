@@ -1,8 +1,9 @@
 HdataServer::Application.routes.draw do
 
-  get "vital_sign_callback/access_code"
+  # get "vital_sign_callback/access_code"
+  get "data/access_code"
 
-  resources :vital_sign_hosts
+  # resources :vital_sign_hosts
 
   ##
   resources :ref_consult_requests
@@ -19,6 +20,8 @@ HdataServer::Application.routes.draw do
   resources :notifications
 
   resources :notify_configs
+
+
 
   get "audit_review/index"
 
@@ -46,7 +49,8 @@ HdataServer::Application.routes.draw do
 
   resources :records do
     resources :c32
-    resources :vital_sign_feeds
+    resources :data
+    # resources :vital_sign_feeds
   end
 
   match "records/:record_id/studies" => "studies#index", :as => :studies, :via => :get

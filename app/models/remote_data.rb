@@ -1,19 +1,22 @@
-require "tatrc/vital_signs_importer"
 
-class VitalSignFeed
+class RemoteData
   include Mongoid::Document
 
   field :url, type: String
-
-  belongs_to :vital_sign_host
+  field :data_type, type: String
+  
   belongs_to :record
 
   def fetch(access_token)
     token = Rack::OAuth2::AccessToken::Bearer.new(:access_token => access_token)
-    feed = token.get(url)
-    vital_signs = TATRC::VitalSignsImporter.instance.import(feed.body)
-    record.vital_signs.concat(vital_signs)
-    record.save!
+    response = token.get(url)
+    case response.contenttype
+   	when "application/xml"
+   		
+   	when "application/dicom"
+   		record.images = Image.new(response.content)
+   	else
+   	end
   end
 
   def obtain_access_token(authorization_code, redirect_uri)

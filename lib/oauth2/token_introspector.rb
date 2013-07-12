@@ -4,7 +4,7 @@ module OAuth2
     include Singleton
 
     def initialize
-      @oauth2 = YAML.load(File.open("config/oauth2.yml"))
+      @oauth2 = OAUTH2_CONFIG.remote_hosts
     end
 
     def authorize(controller)

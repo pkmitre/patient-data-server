@@ -4,6 +4,6 @@ local_host:
   client_secret: 	
   host: 			
   port: 			
-  redirect_uri: 	
+  redirect_uri: 
 remote_hosts:
   http://test.com: https://test.com/oauth2/introspection

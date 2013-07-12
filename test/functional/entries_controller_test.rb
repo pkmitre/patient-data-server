@@ -21,7 +21,6 @@ class EntriesControllerTest < AtomTest
 
     get :show, {record_id: @record.medical_record_number, section: 'results', id: @record.results.first.id, token: token}
     assert_response :success
-
   end
 
   test "unauthorized access" do
