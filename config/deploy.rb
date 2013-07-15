@@ -39,8 +39,8 @@ namespace :deploy do
       ln -nfs #{shared_path}/config/oauth2.yml #{release_path}/config/oauth2.yml &&
       rm -f #{release_path}/config/ui.yml &&
       ln -nfs #{shared_path}/config/ui.yml #{release_path}/config/ui.yml &&
-      rm -f #{release_path}/public/logo.png &&
-      ln -nfs #{shared_path}/config/logo.png #{release_path}/public/logo.png
+      rm -f #{release_path}/app/assets/images/logo.png &&
+      ln -nfs #{shared_path}/config/logo.png #{release_path}/app/assets/images/logo.png
     CMD
   end
 
