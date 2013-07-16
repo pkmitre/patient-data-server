@@ -1,4 +1,4 @@
-class VitalSignAuth
+class RemoteAuth
   include Mongoid::Document
   
   embedded_in :user
@@ -6,11 +6,11 @@ class VitalSignAuth
   field :access_token, type: String
   field :refresh_token, type: String
   
-  belongs_to :vital_sign_feed
+  belongs_to :remote_data, class_name: "RemoteData"
   
   def fetch
     if access_token
-      vital_sign_feed.fetch(access_token)
+      remote_data.fetch(access_token)
       true
     else
       false

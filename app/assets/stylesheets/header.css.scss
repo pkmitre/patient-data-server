@@ -1,3 +1,5 @@
+@import "common";
+
 $header-bg: $title-color;
 $header-fg: white;
 
@@ -6,14 +8,14 @@ $logo-font-family-list2: Tahoma, Sans-Serif;
 $logo-size: 24px;
 
 #page_header {
-    height: 25px;
-    background-color: $header-bg;
-    color: $header-fg;
-    margin: 0px;
-    margin-left: -$gutter;
-    margin-right: -$gutter;
-    padding: 2px;
-    border-bottom: 3px solid $header-logo-color;
+    // height: 25px;
+    // background-color: $header-bg;
+    // color: $header-fg;
+    // margin: 0px;
+    // margin-left: -$gutter;
+    // margin-right: -$gutter;
+    // padding: 2px;
+    // border-bottom: 3px solid $header-logo-color;
 }
 
 #page_header a {
@@ -26,14 +28,14 @@ $logo-size: 24px;
 
 #page_header #logo {
     float: left;
-    margin: 2px;
-    position: relative;
-    top: -5px;
-    font-family: $logo-font-family-list;
-    font-size: $logo-size;
-    font-weight: bold;
-    margin-left: $gutter;
-    color: $header-logo-color;
+    // margin: 2px;
+    // position: relative;
+    // top: -5px;
+    // font-family: $logo-font-family-list;
+    // font-size: $logo-size;
+    // font-weight: bold;
+    // margin-left: $gutter;
+    // color: $header-logo-color;
 }
 
 #page_header #sublogo {
@@ -46,10 +48,11 @@ $logo-size: 24px;
 #page_header #user {
     float: left;
     margin: 2px;
-    padding-left: 1in;
+    padding-left: 0.5in;
 }
 
 #breadcrumbs {
+    float:left;
     margin: 2mm;
     margin-left: 0;
 }

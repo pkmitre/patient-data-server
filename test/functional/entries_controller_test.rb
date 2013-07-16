@@ -9,6 +9,26 @@ class EntriesControllerTest < AtomTest
     @user = FactoryGirl.create(:user)
     sign_in @user
   end
+
+  test "get result w/ oauth2" do
+    sign_out @user
+
+    claim = {iss: 'http://test.com', scopes: %w(data images), exp: 1.week.from_now, nbf: Time.now}
+    token = JSON::JWT.new(claim).to_s
+
+    stub_request(:post, "https://test.com/oauth2/introspection").to_return(body: "{\"active\": true, \"scopes\": \"data\"}")
+    request.env['HTTP_ACCEPT'] = Mime::XML
+
+    get :show, {record_id: @record.medical_record_number, section: 'results', id: @record.results.first.id, token: token}
+    assert_response :success
+  end
+
+  test "unauthorized access" do
+    sign_out @user
+    request.env['HTTP_ACCEPT'] = Mime::XML
+    get :show, {record_id: @record.medical_record_number, section: 'results', id: @record.results.first.id}
+    assert_response :unauthorized
+  end
   
   test "get a result as xml" do
     request.env['HTTP_ACCEPT'] = Mime::XML
@@ -40,6 +60,15 @@ class EntriesControllerTest < AtomTest
     rss = atom_results
     assert_atom_result_count rss, 1
     assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/results/#{@record.results.first.id}"
+  end
+
+  test "test metadata" do
+     result = @record.results.first
+     result.build_document_metadata
+     pedigree = Metadata::Pedigree.new(organization: "something")
+     pedigree.build_author(name: "Steve")
+     result.document_metadata.pedigrees << pedigree
+     HealthDataStandards::Export::Hdata::Metadata.new.export(result, result.document_metadata)
   end
   
   test "post a new result section document" do

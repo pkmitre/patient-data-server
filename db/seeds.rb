@@ -12,3 +12,4 @@ host_name = Mongoid.default_session.cluster.nodes.first.address
 `mongoimport -d #{db_name} -h #{host_name} --drop -c users test/fixtures/users.json`
 `mongoimport -d #{db_name} -h #{host_name} --drop -c ref_consult_requests test/fixtures/ref_consult_requests.json`
 `mongoimport -d #{db_name} -h #{host_name} --drop -c ref_numbers test/fixtures/ref_numbers.json`
+Record.all.each(&:save) # Need to do this to set IDs on entries @SS
