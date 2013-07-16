@@ -15,7 +15,7 @@
 <% @records.each do |record| %>
 		<tr>
     <td><%= record.medical_record_number %></td>
-    <td><%= link_to((record.first + '&nbsp;' + record.last).html_safe, root_feed_path(record.medical_record_number)) %></td>
+    <td><%= link_to(("#{record.first}&nbsp;#{record.last}").html_safe, root_feed_path(record.medical_record_number)) %></td>
     </tr>
 <% end %>
 </tbody>
