@@ -1,71 +1,51 @@
 <%# stylesheet_link_tag :login %>
-<div class="login">
-<h2>Login</h2>
+<div class="row" style="padding-left:20px"><h2>Login</h2></div>
+<div class="login row">
 
-<div id="flow">
 
-<div id="userpass">
+  <div class="span6" style="border-right:1px solid #ccc;">
   <h3>Enter your user credentials</h3>
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <div class="control-group">
+    <%= f.label :email, class: "control-label" %>
+    <div class="controls"><%= f.email_field :email %></div>
+  </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+  <div class="control-group">
+    <%= f.label :password, class: "control-label" %>
+    <div class="controls"><%= f.password_field :password %></div>
+  </div>
 
-  <div><%= f.submit("Login") %></div>
-<% end %>
-  <%= render :partial => "devise/shared/links" %>
-</div>
+  <div class="control-group">
+    <div class="controls">
+      <% if devise_mapping.rememberable? -%>
+        <label class="checkbox">
+         <%= f.check_box :remember_me %> Remember me
+        </label>
+      <% end -%>
+      <%= f.submit("Login") %>
+    </div>
+  </div>
 
-<div id="openconnectemail">
-  <h3>Enter your email address</h3>
-  <!-- Fill in the appropriate information in this form_for and the text and submit for the
-        open id connect submission -->
-  <%= form_for(resource, :url => session_path(resource_name)) do |f| %>
-  <%= f.text_field(:email) %><br>
-  <%= f.submit("Login") %>
+  
+
   <% end %>
+
+
+
+
+  <%= render :partial => "devise/shared/links" %>
+  </div>
+  <div class="span5" style="padding-left:35px">
+  <h3>Choose an OpenID Provider</h3>
+    <div class="well">
+    <a href="/auth/csis" class="btn btn-large btn-block">CSIS</a>
+    <a href="/auth/tatrc" class="btn btn-large btn-block">TATRC</a>
+    <a href="/auth/usafa" class="btn btn-large btn-block">USAFA</a>
+    </div>
+
+  </div>
 </div>
 
-<div id="sep">
-   <div id="or">OR</div>
-   <div id="bar"></div>
-</div>
 
-<div id="openid">
-  <h3>Select an identity provider</h3>
-  <table><tr>
-      <td>
-        <a href="/auth/openid_connect" class="auth_provider">
-        <%= image_tag "open_id_large.png", :class => "tag", :alt => "OpenID" %>
-        </a>
-      </td>
-      <td>
-        <a href="#" onclick="window.location='/auth/open_id?openid_url=id.mitre.org'" class="auth_provider">
-        <%= image_tag "mitre_open_id.png", :class => "tag", :alt => "MITRE Open ID" %>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#" class="auth_provider">
-        <%= image_tag "cac_large.png", :class => "tag", :alt => "Common Access Card" %>
-        </a>
-      </td>
-      <td>
-        <a href="#" class="auth_provider">
-        <%= image_tag "google_large.png", :class => "tag", :alt => "Google Authentication" %>
-        </a>
-      </td>
-    </tr>
-  </table>
-
-</div>
-</div>
-      
-</div>

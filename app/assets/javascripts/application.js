@@ -9,4 +9,6 @@
 //= require bootstrap
 //= require bootstrap-modal
 //= require bootstrap-dropdown
+//= require bootstrap-tab
+
 //= require_tree .
