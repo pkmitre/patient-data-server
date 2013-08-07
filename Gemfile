@@ -12,7 +12,7 @@ gem 'devise'
 gem "json-jwt"
 
 gem 'omniauth'
-gem 'omniauth_openid_connect', :git => "https://github.com/project-rhex/omniauth_openid_connect.git"
+gem 'omniauth_openid_connect', :git => "https://github.com/pkmitre/omniauth_openid_connect.git"
 
 gem 'kaminari'
 gem "symbolize", :require => "symbolize/mongoid"
