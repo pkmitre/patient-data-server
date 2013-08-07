@@ -37,6 +37,8 @@ namespace :deploy do
     run <<-CMD
       rm -f #{release_path}/config/oauth2.yml &&
       ln -nfs #{shared_path}/config/oauth2.yml #{release_path}/config/oauth2.yml &&
+      rm -f #{release_path}/config/initializers/omniauth.rb &&
+      ln -nfs #{shared_path}/config/omniauth.rb #{release_path}/config/initializers/omniauth.rb &&
       rm -f #{release_path}/config/ui.yml &&
       ln -nfs #{shared_path}/config/ui.yml #{release_path}/config/ui.yml &&
       rm -f #{release_path}/app/assets/images/logo.png &&
