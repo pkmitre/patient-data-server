@@ -34,8 +34,8 @@ class AtomFeedModuleTest < ActiveSupport::TestCase
     e2 = feed.entries[1]
     assert_equal 'title a1', e1.title
     assert_equal 'title a2', e2.title
-    assert_equal '/a1', e1.links[0]
-    assert_equal '/a2', e2.links[0]
+    assert_equal '/a1', e1.links[0].url
+    assert_equal '/a2', e2.links[0].url
     assert_equal '1', e1.entry_id
     assert_equal '2', e2.entry_id
   end

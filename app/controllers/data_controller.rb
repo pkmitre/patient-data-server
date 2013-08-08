@@ -10,14 +10,14 @@ class DataController < ApplicationController
     auth = current_user.auth_for_feed(data)
     
     if auth.fetch
-      flash[:notice] = "Imported new vital signs"
+      flash[:notice] = "Imported new data"
       redirect_to record_path(@record.medical_record_number)
     else
       redirect_to AuthHost.instance.authorization_request_url(data_access_code_url, Rails.env.production?).to_s
     end
   end
 
-    def access_code
+  def access_code
     # The way we pair up the access code sent back from the resource host with a feed
     # is by looking for the first VitalSignAuth without an access_token. In theory,
     # we should be able to use the state parameter as described in OAuth 2, but it

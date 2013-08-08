@@ -19,6 +19,8 @@ gem "symbolize", :require => "symbolize/mongoid"
 
 gem 'rest-client'
 
+gem "typhoeus"
+
 gem 'rmagick'
 gem 'dicom'
 

@@ -38,6 +38,6 @@ class C32ControllerTest < AtomTest
     assert_atom_success
     rss = atom_results
     assert_atom_result_count rss, 1
-    assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/c32/#{@record.medical_record_number}"
+    assert rss.entries[0].content_link.url.include? "/records/#{@record.medical_record_number}/c32/#{@record.medical_record_number}"
   end
 end

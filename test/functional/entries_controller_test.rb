@@ -59,7 +59,7 @@ class EntriesControllerTest < AtomTest
     assert_atom_success
     rss = atom_results
     assert_atom_result_count rss, 1
-    assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/results/#{@record.results.first.id}"
+    assert rss.entries[0].content_link.url.include? "/records/#{@record.medical_record_number}/results/#{@record.results.first.id}"
   end
 
   test "test metadata" do

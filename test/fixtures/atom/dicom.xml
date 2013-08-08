@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:localhost,2005:/records/1/studies/5201325e9a67cae378000002/images</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/records/1/studies/5201325e9a67cae378000002/images"/>
+  <link rel="self" type="application/atom+xml" href="http://localhost:3000/records/1/studies/5201325e9a67cae378000002/images.atom"/>
+  <entry>
+    <id>tag:localhost,2005:Image/520132679a67cae378000003</id>
+    <link rel="alternate" type="text/html" href="http://localhost:3000/records/1/studies/5201325e9a67cae378000002/images/520132679a67cae378000003"/>
+    <link rel="alternate" type="image/dcm" href="http://localhost:3000/records/1/studies/5201325e9a67cae378000002/images/520132679a67cae378000003.dcm"/>
+    <title>#</title>
+    <series_description/>
+    <instance_number/>
+  </entry>
+  <entry>
+    <id>tag:localhost,2005:Image/520132809a67cae378000004</id>
+    <link rel="alternate" type="text/html" href="http://localhost:3000/records/1/studies/5201325e9a67cae378000002/images/520132809a67cae378000004"/>
+    <link rel="alternate" type="image/dcm" href="http://localhost:3000/records/1/studies/5201325e9a67cae378000002/images/520132809a67cae378000004.dcm"/>
+    <title>#</title>
+    <series_description/>
+    <instance_number/>
+  </entry>
+</feed>
