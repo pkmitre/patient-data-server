@@ -22,6 +22,7 @@ gem 'rest-client'
 gem "typhoeus"
 
 gem 'rmagick'
+gem 'feedzirra'
 gem 'dicom'
 
 group :assets do
@@ -47,7 +48,6 @@ group :test do
   gem "pry"
   gem 'turn', :require => false
   gem "minitest", "~> 4.0"
-  gem 'feedzirra'
   gem 'cover_me'
   gem 'factory_girl_rails'
   gem 'webmock'
