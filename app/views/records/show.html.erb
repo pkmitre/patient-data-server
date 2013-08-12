@@ -9,7 +9,7 @@
     
 			<h2>Demographic Information</h2>
 			<%= sex(@record) %><br>
-			<%= getAgeText(@record.birthdate).html_safe %> <br>
+			<%= display_age(@record.birthdate).html_safe %> <br>
 		</div>
 		<div class="span6">
 			<%= render :layout => "section", :locals => {:record => @record, :section => :immunizations} do |x| %>

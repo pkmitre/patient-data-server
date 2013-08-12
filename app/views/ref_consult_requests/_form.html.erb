@@ -54,7 +54,7 @@
 		</div> 
   <div class="control-group">
  		<%= f.label "Age", :class=>"control-label" %>
-		<div class="controls"><p><%= getAgeText(@record.birthdate).html_safe if @record %></p></div>
+		<div class="controls"><p><%= display_age(@record.birthdate).html_safe if @record %></p></div>
 	</div>
   <div class="control-group">
     <%= f.label "Conditions", :class=>"control-label" %>

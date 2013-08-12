@@ -20,16 +20,16 @@ module ApplicationHelper
     ("<dt>#{label}</dt> <dd>#{value}</dd>").html_safe
   end
 
-  def getAgeText(birthdate)
+  def display_age(birthdate)
     return "Forever Young" if birthdate.nil?
-    bdate = Time.at(birthdate) if (birthdate.class == Fixnum) 
+    bdate = Time.at(birthdate) if birthdate.numeric?
     return date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)"
   end
 
   # Show the date, formatted
   def date(date_value, default = 'never')
     if date_value
-      date_value = Time.at(date_value) if date_value.class == Fixnum
+      date_value = Time.at(date_value) if date_value.numeric?
       date_value.strftime("%d-%b-%Y")
     else
       default
