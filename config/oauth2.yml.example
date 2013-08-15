@@ -3,7 +3,8 @@ local_host:
   client_id: 1234	
   client_secret: 1234	
   host: localhost
-  auth_code_path: authorize
+  authorization_path: /authorize
+  token_path: /token
   port: 			
   redirect_uri: http://localhost/redirect
 remote_hosts:

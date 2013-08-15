@@ -1,9 +1,0 @@
----
-local_host:
-  client_id: 		
-  client_secret: 	
-  host: 			
-  port: 			
-  redirect_uri: 	
-remote_hosts:
-  http://test.com: https://test.com/oauth2/introspection

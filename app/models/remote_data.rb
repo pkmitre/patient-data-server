@@ -13,13 +13,14 @@ class RemoteData
   end
 
   def obtain_access_token(authorization_code, redirect_uri)
+    auth = AuthHost.instance
     client = Rack::OAuth2::Client.new(
-      :identifier => vital_sign_host.client_id,
-      :secret => vital_sign_host.client_secret,
+      :identifier => auth.client_id,
+      :secret => auth.client_secret,
       :redirect_uri => redirect_uri,
-      :host => vital_sign_host.hostname,
+      :host => auth.host,
       :token_endpoint => "/oauth/token",
-      :port => vital_sign_host.port,
+      :port => auth.port,
       :scheme => "http"
     )
 

@@ -1,6 +1,6 @@
 class DataController < ApplicationController
 
-  before_filter :find_record
+  before_filter :find_record, except: [:access_code]
 
   def create
     data = RemoteData.new(params[:remote_data])
