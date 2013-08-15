@@ -21,7 +21,7 @@ class RemoteData
       :host => auth.host,
       :token_endpoint => "/oauth/token",
       :port => auth.port,
-      :scheme => use_https ? 'http' : 'https',
+      :scheme => use_https ? 'https' : 'http',
       :scope => auth.scope
     )
 
