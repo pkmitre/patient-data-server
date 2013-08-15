@@ -28,8 +28,7 @@ class DataController < ApplicationController
     auth = current_user.remote_auths.where(access_token: nil).first
     
     access_token = auth.remote_data.obtain_access_token(params[:code], 
-                                                        url_for(controller: 'data',action: 'access_code'), 
-                                                        Rails.env.production?)
+                                                        url_for(controller: 'data',action: 'access_code'))
 
     auth.access_token = access_token.access_token
     auth.refresh_token = access_token.refresh_token
