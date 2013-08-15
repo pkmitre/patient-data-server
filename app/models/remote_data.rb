@@ -22,7 +22,7 @@ class RemoteData
       :token_endpoint => "/oauth/token",
       :port => auth.port,
       :scheme => "http",
-      scope => auth.scope
+      :scope => auth.scope
     )
 
     client.authorization_code = authorization_code
