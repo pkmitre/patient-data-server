@@ -12,7 +12,7 @@ class RemoteData
     persist_data(result)
   end
 
-  def obtain_access_token(authorization_code, redirect_uri)
+  def obtain_access_token(authorization_code, redirect_uri, use_https=false)
     auth = AuthHost.instance
     client = Rack::OAuth2::Client.new(
       :identifier => auth.client_id,
@@ -21,7 +21,7 @@ class RemoteData
       :host => auth.host,
       :token_endpoint => "/oauth/token",
       :port => auth.port,
-      :scheme => "http",
+      :scheme => use_https ? 'http' : 'https',
       :scope => auth.scope
     )
 
