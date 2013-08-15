@@ -7,5 +7,6 @@ local_host:
   token_path: /token
   port: 			
   redirect_uri: http://localhost/redirect
+  scope: openid+phone+email+address+profile
 remote_hosts:
   http://test.com: https://test.com/oauth2/introspection

@@ -4,7 +4,7 @@ class AuthHost
   include Singleton
 
 
-  attr_reader :client_id, :client_secret, :host, :token_endpoint, :auth_endpoint, :port
+  attr_reader :client_id, :client_secret, :host, :token_endpoint, :auth_endpoint, :port, :scope
 
   def initialize
     config = OpenStruct.new(OAUTH2_CONFIG.local_host)
@@ -14,12 +14,13 @@ class AuthHost
     @token_endpoint = config.token_path
     @auth_endpoint = config.authorization_path
     @port = config.port
+    @scope = config.scope
   end
 
   def authorization_request_url(redirect_uri, use_https=false)
     query = {'client_id' => @client_id, 'client_secret' => @client_secret,
              'response_type' => 'code', 'redirect_uri' => redirect_uri,
-             'scope' => "vitals"}.to_query
+             'scope' => @scope}.to_query
     path = @auth_endpoint
 
     mode = use_https ? URI::HTTPS : URI::HTTP
