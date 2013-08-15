@@ -1,9 +1,10 @@
 ---
 local_host:
-  client_id: 		
-  client_secret: 	
-  host: 			
+  client_id: 1234	
+  client_secret: 1234	
+  host: localhost
+  auth_code_path: authorize
   port: 			
-  redirect_uri: 
+  redirect_uri: http://localhost/redirect
 remote_hosts:
   http://test.com: https://test.com/oauth2/introspection
