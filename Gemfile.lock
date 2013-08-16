@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pkmitre/omniauth_openid_connect.git
-  revision: 64497ad2aadb47597b8e4115a1925020c27b7838
+  revision: 0ee34f0074febc1abbd65722b774a38e473c60dc
   specs:
     omniauth_openid_connect (0.7.2)
       omniauth (~> 1.0)
