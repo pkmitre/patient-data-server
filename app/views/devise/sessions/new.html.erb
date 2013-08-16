@@ -1,43 +1,45 @@
 <%# stylesheet_link_tag :login %>
-<div class="row" style="padding-left:20px"><h2>Login</h2></div>
+<!-- <div class="row" style="padding-left:20px"><h2>Login</h2></div> -->
 <div class="login row">
 
+  <% unless Rails.env.production? %>
+    <div class="span6" style="border-right:1px solid #ccc;">
+    <h3>Enter your user credentials</h3>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
 
-  <div class="span6" style="border-right:1px solid #ccc;">
-  <h3>Enter your user credentials</h3>
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
-
-  <div class="control-group">
-    <%= f.label :email, class: "control-label" %>
-    <div class="controls"><%= f.email_field :email %></div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :password, class: "control-label" %>
-    <div class="controls"><%= f.password_field :password %></div>
-  </div>
-
-  <div class="control-group">
-    <div class="controls">
-      <% if devise_mapping.rememberable? -%>
-        <label class="checkbox">
-         <%= f.check_box :remember_me %> Remember me
-        </label>
-      <% end -%>
-      <%= f.submit("Login") %>
+    <div class="control-group">
+      <%= f.label :email, class: "control-label" %>
+      <div class="controls"><%= f.email_field :email %></div>
     </div>
-  </div>
 
-  
+    <div class="control-group">
+      <%= f.label :password, class: "control-label" %>
+      <div class="controls"><%= f.password_field :password %></div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <% if devise_mapping.rememberable? -%>
+          <label class="checkbox">
+           <%= f.check_box :remember_me %> Remember me
+          </label>
+        <% end -%>
+        <%= f.submit("Login") %>
+      </div>
+    </div>
+
+    
+
+    <% end %>
+
+
+
+
+    <%= render :partial => "devise/shared/links" %>
+    </div>
 
   <% end %>
-
-
-
-
-  <%= render :partial => "devise/shared/links" %>
-  </div>
-  <div class="span5" style="padding-left:35px">
+  <div class="span6 offset3">
   <h3>Choose an OpenID Provider</h3>
     <div class="well">
     <a href="/auth/csis" class="btn btn-large btn-block">CSIS</a>
