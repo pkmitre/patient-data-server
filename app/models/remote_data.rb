@@ -19,7 +19,7 @@ class RemoteData
       :secret => auth.client_secret,
       :redirect_uri => redirect_uri,
       :host => auth.host,
-      :token_endpoint => "/oauth/token",
+      :token_endpoint => auth.token_endpoint,
       # :port => auth.port,
       :scheme => "http",
       :scope => auth.scope
