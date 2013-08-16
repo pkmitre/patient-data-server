@@ -24,7 +24,7 @@ class RemoteData
       :scheme => "http",
       :scope => auth.scope
     )
-
+    client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
     client.authorization_code = authorization_code
     client.access_token!
   end
@@ -33,6 +33,7 @@ class RemoteData
 
   def download(remote_url, access_token)
     token = Rack::OAuth2::AccessToken::Bearer.new(:access_token => access_token)
+    
     response = token.get(remote_url)
 
     entry = case response.contenttype
