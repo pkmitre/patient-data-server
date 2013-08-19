@@ -1,16 +1,25 @@
-<div class="patient">
-  <h1>Patient Name :
-    <span id='patient_name'><%= (@record.first + ' ' + @record.last).html_safe %></span>
-  </h1>
-  
-  
+
   <div class="row">
-  	<div class="span6">
-    
-			<h2>Demographic Information</h2>
-			<%= sex(@record) %><br>
-			<%= display_age(@record.birthdate).html_safe %> <br>
-		</div>
+        <div class="span6">
+    <span id='patient_name'><%= (@record.first + ' ' + @record.last).html_safe %></span>
+
+    <br>
+      <%= sex(@record) %><br>
+      <%= display_age(@record.birthdate).html_safe %> <br>
+    </div>
+    <div class="span6">        
+        <%= labeled_field 'BMI',  latest_matching_vital(@record, 'BMI')%>
+        <%= labeled_field 'Heart Rate',  latest_matching_vital(@record, 'Heart Rate')%>
+        <%= labeled_field 'Systolic BP',  latest_matching_vital(@record, 'Systolic')%>
+        <%= labeled_field 'Diastolic BP',  latest_matching_vital(@record, 'Diastolic')%>
+       
+</div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <%= render :layout => "section", :locals => {:record => @record, :section => :studies} do |x| %>
+        <%= link_to x.description, images_path(@record.medical_record_number, x, format: 'atom') %>
+      <% end %>    </div>
 		<div class="span6">
 			<%= render :layout => "section", :locals => {:record => @record, :section => :immunizations} do |x| %>
 				<% refused = x['refusalInd'] ? 'Refused ' : '' %>
@@ -62,16 +71,6 @@
           <%= labeled_field("#{x['description']} #{show_values(x.values)}", date(x['time'])) %>
         <% end %>
 </div>
-<div class="span6">        
-         <h2><%= I18n.t("section.vital_signs") %></h2>
-        <%= labeled_field 'BMI',  latest_matching_vital(@record, 'BMI')%>
-        <%= labeled_field 'Heart Rate',  latest_matching_vital(@record, 'Heart Rate')%>
-        <%= labeled_field 'Systolic BP',  latest_matching_vital(@record, 'Systolic')%>
-        <%= labeled_field 'Diastolic BP',  latest_matching_vital(@record, 'Diastolic')%>
-        <div class='history_link'><%= link_to(('Past ' + I18n.t("section.vital_signs")).html_safe, record_path(@record.medical_record_number) + "/vital_signs") %></div>
 
 </div>
-</div>
-
   <div class="footer">Last updated on <%= @record.updated_at.try(:strftime, "%m/%d/%Y") %> by <a href='link'>Dr Rick Jones</a> (<%=link_to "Refresh", record_path(@record.medical_record_number), method: :get %>)</div>
-</div>
