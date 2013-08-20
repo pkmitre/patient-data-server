@@ -16,7 +16,7 @@ class EntriesControllerTest < AtomTest
     claim = {iss: 'http://test.com', scopes: %w(data images), exp: 1.week.from_now, nbf: Time.now}
     token = JSON::JWT.new(claim).to_s
 
-    stub_request(:post, "https://test.com/oauth2/introspection").to_return(body: "{\"active\": true, \"scopes\": \"data\"}")
+    stub_request(:post, "https://test.com/oauth2/introspection").to_return(body: "{\"active\": true, \"scope\": \"data\"}")
     request.env['HTTP_ACCEPT'] = Mime::XML
 
     get :show, {record_id: @record.medical_record_number, section: 'results', id: @record.results.first.id, token: token}

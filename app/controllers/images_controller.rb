@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-
+  include OAuth2::TokenAuthorizable
+  
   before_filter :find_record, :find_study
 
   respond_to :atom, :html

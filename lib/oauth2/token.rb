@@ -5,7 +5,7 @@ module OAuth2
     
     def initialize(token_hash)
         @active = token_hash['active']
-        @scopes = token_hash['scopes'].split(' ')
+        @scopes = token_hash['scope'].try(:split, ' ') || []
     end
 
     def valid_for(object)

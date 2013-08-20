@@ -11,7 +11,7 @@ class RemoteDataTest < ActiveSupport::TestCase
 
   test "download image" do
    
-    stub_request(:get, "www.example.com").to_return(body: @image.read, headers: {'Content-Type' => 'application/dicom'})
+    stub_request(:get, "www.example.com").to_return(body: @image.read, headers: {'Content-Type' => 'image/dcm'})
     @data.fetch("fake token")
 
     study = @record.studies.first
@@ -24,7 +24,7 @@ class RemoteDataTest < ActiveSupport::TestCase
    
     atom_file = File.open("test/fixtures/atom/dicom.xml")
     stub_request(:get, "www.example.com").to_return(body: atom_file.read, headers: {'Content-Type' => 'application/atom+xml'})
-    stub_request(:get, /localhost.*/).to_return(body: @image.read, headers: {'Content-Type' => 'application/dicom'})
+    stub_request(:get, /localhost.*/).to_return(body: @image.read, headers: {'Content-Type' => 'image/dcm'})
     
     @data.fetch("fake_token")
 
@@ -38,7 +38,7 @@ class RemoteDataTest < ActiveSupport::TestCase
    
     atom_file = File.open("test/fixtures/atom/lab_result.xml")
     stub_request(:get, "www.example.com").to_return(body: atom_file.read, headers: {'Content-Type' => 'application/atom+xml'})
-    stub_request(:get, /localhost.*/).to_return(body: @image.read, headers: {'Content-Type' => 'application/dicom'})
+    stub_request(:get, /localhost.*/).to_return(body: @image.read, headers: {'Content-Type' => 'image/dcm'})
     
     @data.fetch("fake_token")
 

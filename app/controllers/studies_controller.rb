@@ -1,5 +1,5 @@
 class StudiesController < ApplicationController
-
+  include OAuth2::TokenAuthorizable
   before_filter :find_record
 
   respond_to :atom, :html

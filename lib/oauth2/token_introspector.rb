@@ -4,7 +4,7 @@ module OAuth2
     include Singleton
 
     def initialize
-      @oauth2 = OAUTH2_CONFIG.remote_hosts
+      @oauth2 = OAUTH2_CONFIG
     end
 
     def authorize(controller)
@@ -29,11 +29,11 @@ module OAuth2
     end
 
     def fetch_authorization(jwt, object)
-      token = JSON::JWT.decode(jwt)
+      token = JSON::JWT.decode(jwt, :skip_verification) #don't need to verify because the introspection endpoint does that for us
       issuer = token['iss']
-      introspection_endpoint = @oauth2[issuer]
+      introspection_endpoint = @oauth2.remote_hosts[issuer]
 
-      token_response = RestClient.post(introspection_endpoint, token: jwt)
+      token_response = RestClient.post(introspection_endpoint, token: jwt, client_id: @oauth2.local_host['client_id'], client_secret: @oauth2.local_host['client_secret'])
       token_result = ActiveSupport::JSON.decode(token_response)
       token = OAuth2::Token.new(token_result)
 

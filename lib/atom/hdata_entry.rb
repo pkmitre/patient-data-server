@@ -7,6 +7,6 @@ class HdataEntry < Feedzirra::Parser::AtomEntry
 	element :content
 
 	def content_link
-		links.detect { |l| l.url != "text/html"}
+		links.detect { |l| l.content_type != "text/html"}
 	end
 end

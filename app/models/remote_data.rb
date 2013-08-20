@@ -37,25 +37,16 @@ class RemoteData
     response = token.get(remote_url)
 
     entry = case response.contenttype
-    when "application/atom+xml"
+    when %r{application/atom}
       download_atom_feed(response.content, access_token)
-    when "application/xml"
+    when %r{application/xml}
      importer = SectionRegistry.instance.extension_from_path(self.data_type).importers['application/xml']
      doc = Nokogiri::XML(response.content)
      importer.import(doc)
-    when "application/json"
+    when %r{application/json}
       response.content
-    when "application/dicom"
+    when %r{image/dcm}
       Image.new(data: response.content)
-    end
-  end
-
-  def content_type
-    case data_type
-    when "images"
-      "application/dicom"
-    else
-      "application/xml"
     end
   end
 
@@ -80,7 +71,6 @@ class RemoteData
   end
 
   def download_atom_feed(feed, token)
-    # binding.pry
     Feedzirra::Feed.parse(feed).entries.map do |entry|
       download(entry.content_link.url, token)
     end
