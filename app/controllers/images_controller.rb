@@ -1,3 +1,5 @@
+require "oauth2/token_introspection"
+
 class ImagesController < ApplicationController
   include OAuth2::TokenAuthorizable
   
