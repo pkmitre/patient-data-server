@@ -36,38 +36,26 @@ class RemoteData
 
     response = token.get(remote_url)
 
-    entry = case response.contenttype
-    when %r{application/atom}
-      download_atom_feed(response.content, access_token)
-    when %r{application/xml}
-     importer = SectionRegistry.instance.extension_from_path(self.data_type).importers['application/xml']
-     doc = Nokogiri::XML(response.content)
-     importer.import(doc)
-    when %r{application/json}
-      response.content
-    when %r{image/dcm}
-      Image.new(data: response.content)
-    end
+    entry = case response.content_type
+            when %r{application/atom}
+              download_atom_feed(response.content, access_token)
+            when %r{application/xml}
+              importer = SectionRegistry.instance.extension_from_path(self.data_type).importers['application/xml']
+              doc = Nokogiri::XML(response.content)
+              importer.import(doc)
+            when %r{application/json}, %r{application/dicom}
+              response.content
+            end
   end
 
   def persist_data(data)
-    if data_type == "images" #dicom
-      create_study(data)
+    if data_type == "studies" #dicom
+      record.create_study(data)
     elsif data.is_a?(Hash) #json
       record.send(data_type).create(data)
     else
       record.send(data_type) << data #xml
     end
-  end
-
-  def create_study(images)
-    study = record.studies.build
-    if images.is_a?(Array)
-      study.images.concat images
-    else
-      study.images << images
-    end
-    record.save!
   end
 
   def download_atom_feed(feed, token)

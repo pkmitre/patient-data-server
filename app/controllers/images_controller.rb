@@ -14,7 +14,7 @@ class ImagesController < ApplicationController
     if params[:format] == 'jpg'
       send_data @image.jpeg, :type => 'image/jpg',:disposition => 'inline'
     elsif params[:format] == 'dcm'
-      send_data @image.data, :type => 'image/dcm',:disposition => 'inline'
+      send_data @image.data, :type => 'application/dicom',:disposition => 'inline'
     end
   end
 
