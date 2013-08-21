@@ -15,6 +15,7 @@ class Record
                                 instance_number: dicom_object.value('0020,0013').to_i)
     end
     study.save
+    touch # Need to force the timestamp to update
     save
   end
 
