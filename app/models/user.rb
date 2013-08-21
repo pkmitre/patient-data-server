@@ -98,12 +98,13 @@ class User
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
   
-  # def auth_for_feed(vsf)
-  #   vital_sign_auths.detect { |auth| auth.vital_sign_feed.url.eql?(vsf.url) } || vital_sign_auths.create!(vital_sign_feed: vsf)
-  # end
-
+  # Find the first non-expired auth for the matching url or, if there are none, create a new one
   def auth_for_feed(data)
-    remote_auths.detect { |auth| auth.remote_data.url.eql?(data.url) } || remote_auths.create!(remote_data: data)
+    remote_auth = remote_auths.detect do |auth|
+      token_valid = auth.access_token.blank? || Time.at(JSON::JWT.decode(auth.access_token, :skip_verification)['exp']) > Time.now
+      token_valid && auth.remote_data.url == data.url
+    end
+    remote_auth || remote_auths.create!(remote_data: data)
   end
   
   def password_required?
