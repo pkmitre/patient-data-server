@@ -4,22 +4,30 @@ class Record
 
   embeds_many :studies
 
-  # Temporary support for testing; load DICOM files from a directory into a study embedded in this record
-  def load_study(directory)
-    require 'find'
+  # Given an array of dicom images, create an imaging study for this record
+  def create_study(dicom_images)
     study = studies.create
-    Find.find(directory).each do |path|
-      next if FileTest.directory?(path)
-      puts "Loading #{path}"
-      dicom_file = File.read(path)
-      dicom_object = DICOM::DObject.parse(dicom_file)
+    dicom_images.each do |dicom_image|
+      dicom_object = DICOM::DObject.parse(dicom_image)
       study.description ||= dicom_object.value('0008,1030')
-      study.images << Image.new(data: dicom_file,
+      study.images << Image.new(data: dicom_image.force_encoding('UTF-8'),
                                 series_description: dicom_object.value('0008,103E'),
                                 instance_number: dicom_object.value('0020,0013').to_i)
     end
     study.save
     save
+  end
+
+  # Temporary support for testing; load DICOM files from a directory into a study embedded in this record
+  def load_study(directory)
+    require 'find'
+    imgages = []
+    Find.find(directory).each do |path|
+      next if FileTest.directory?(path)
+      puts "Loading #{path}"
+      images << File.read(path)
+    end
+    create_study images
   end
 
   #-------------------------------------------------------------------------
