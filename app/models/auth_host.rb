@@ -14,16 +14,17 @@ class AuthHost
     @token_endpoint = config.token_path
     @auth_endpoint = config.authorization_path
     @port = config.port
+    @scheme = config.scheme
     @scope = config.scope
   end
 
-  def authorization_request_url(redirect_uri, use_https=false)
+  def authorization_request_url(redirect_uri)
     query = {'client_id' => @client_id, 'client_secret' => @client_secret,
              'response_type' => 'code', 'redirect_uri' => redirect_uri,
              'scope' => @scope}.to_query
     path = @auth_endpoint
 
-    mode = use_https ? URI::HTTPS : URI::HTTP
+    mode = @scheme = 'https' ? URI::HTTPS : URI::HTTP
 
     mode.build(host: @host, path: path, query: query, port: @port)      
   end

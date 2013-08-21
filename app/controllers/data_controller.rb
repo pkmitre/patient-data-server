@@ -13,7 +13,7 @@ class DataController < ApplicationController
       flash[:notice] = "Imported new data"
       redirect_to record_path(@record.medical_record_number)
     else
-      redirect_to AuthHost.instance.authorization_request_url(data_access_code_url, Rails.env.production?).to_s
+      redirect_to AuthHost.instance.authorization_request_url(data_access_code_url).to_s
     end
   end
 
