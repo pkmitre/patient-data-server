@@ -9,17 +9,6 @@ class RemoteDataTest < ActiveSupport::TestCase
     @image = File.open("test/fixtures/sample.dcm")
   end
 
-  test "download image" do
-   
-    stub_request(:get, "www.example.com").to_return(body: @image.read, headers: {'Content-Type' => 'application/dicom'})
-    @data.fetch("fake token")
-
-    study = @record.studies.first
-    assert_not_nil study
-
-    assert_not_nil study.images.first
-  end
-
   test "download atom feed of images" do
    
     atom_file = File.open("test/fixtures/atom/dicom.xml")
