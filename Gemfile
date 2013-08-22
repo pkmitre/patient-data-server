@@ -21,7 +21,7 @@ gem 'rest-client'
 
 gem "typhoeus"
 
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 gem 'feedzirra'
 gem 'dicom'
 
