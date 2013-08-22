@@ -8,7 +8,7 @@ namespace :demo do
 
   task :add_patient => :environment do
     puts "Creating record for Randall Jones"
-    Record.create title: 'MSgt.', first: 'Randall', last: 'Jones', gender: 'M', birthdate: '1972-07-14', medical_record_number: '9999069'
+    Record.create title: 'MSgt.', first: 'Randall', last: 'Jones', gender: 'M', birthdate: Time.parse('1972-07-14').to_i, medical_record_number: '9999069'
   end
 
   task :add_images => :environment do
