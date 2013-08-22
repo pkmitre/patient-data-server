@@ -22,7 +22,7 @@ class Record
   # Temporary support for testing; load DICOM files from a directory into a study embedded in this record
   def load_study(directory)
     require 'find'
-    imgages = []
+    images = []
     Find.find(directory).each do |path|
       next if FileTest.directory?(path)
       puts "Loading #{path}"
