@@ -12,13 +12,9 @@ class EntriesControllerTest < AtomTest
 
   test "get result w/ oauth2" do
 
-    # Override config file for test
-    ::OAUTH2_CONFIG = OpenStruct.new(local_host: { 'client_id' => 'client_id', 'client_secret' => 'client_secret' },
-                                     remote_hosts: { 'https://test.com' => 'https://test.com/oauth2/introspection' })
-
     sign_out @user
 
-    claim = {iss: 'https://test.com', scope: %w(data images), exp: 1.week.from_now, nbf: Time.now}
+    claim = {iss: 'https://test.com/', scope: %w(data images), exp: 1.week.from_now, nbf: Time.now}
     token = JSON::JWT.new(claim).to_s
 
     stub_request(:post, "https://test.com/oauth2/introspection").to_return(body: "{\"active\": true, \"scope\": \"data\"}")

@@ -1,12 +1,16 @@
 ---
 local_host:
-  client_id: 1234	
-  client_secret: 1234	
+  client_id: 1234
+  client_secret: 1234
   host: localhost
   authorization_path: /authorize
   token_path: /token
-  port: 			
+  port:
   redirect_uri: http://localhost/redirect
   scope: openid+phone+email+address+profile
 remote_hosts:
-  http://test.com: https://test.com/oauth2/introspection
+  http://test.com/:
+    path: /oauth2/introspection
+    client_id: 2345
+    client_secret: 2345
+    scheme: https

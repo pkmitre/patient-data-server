@@ -12,9 +12,9 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
-
-OAUTH2_CONFIG = YAML.load(File.open("config/oauth2.yml"))
-
+if Rails.env.test?
+  OAUTH2_CONFIG = YAML.load(File.open("config/oauth2.yml"))
+end
 module HdataServer
   class Application < Rails::Application
     
