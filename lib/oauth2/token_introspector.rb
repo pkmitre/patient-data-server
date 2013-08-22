@@ -27,8 +27,9 @@ module OAuth2
     def fetch_authorization(jwt, object)
       token = JSON::JWT.decode(jwt, :skip_verification) #don't need to verify because the introspection endpoint does that for us
       issuer = token['iss']
+      Rails.logger.info(issuer)
       issuer_uri = URI.parse(issuer)
-      params = OAUTH2_CONFIG.remote_hosts[issuer]
+      params = OAUTH2_CONFIG.remote_hosts[issuer].dup
 
       uri = URI::Generic.build(scheme: issuer_uri.scheme, host: issuer_uri.host, path: params.delete('path'), port: params.delete('port')).to_s
       token_response = RestClient.post(uri, params.merge(token: jwt))
