@@ -27,9 +27,11 @@ module OAuth2
     def fetch_authorization(jwt, object)
       token = JSON::JWT.decode(jwt, :skip_verification) #don't need to verify because the introspection endpoint does that for us
       issuer = token['iss']
-      introspection_endpoint = OAUTH2_CONFIG.remote_hosts[issuer]
+      issuer_uri = URI.parse(issuer)
+      params = OAUTH2_CONFIG.remote_hosts[issuer]
 
-      token_response = RestClient.post(introspection_endpoint, token: jwt, client_id: OAUTH2_CONFIG.local_host['client_id'], client_secret: OAUTH2_CONFIG.local_host['client_secret'])
+      uri = URI::Generic.build(scheme: issuer_uri.scheme, host: issuer_uri.host, path: params.delete('path'), port: params.delete('port')).to_s
+      token_response = RestClient.post(uri, params.merge(token: jwt))
       token_result = ActiveSupport::JSON.decode(token_response)
       token = OAuth2::Token.new(token_result)
 

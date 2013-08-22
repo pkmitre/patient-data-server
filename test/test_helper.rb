@@ -11,6 +11,14 @@ class ActiveSupport::TestCase
     `mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c users test/fixtures/users.json`
     `mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c clients test/fixtures/clients.json`
   end
+
+  
+  # Override config file for test
+  ::OAUTH2_CONFIG = OpenStruct.new(local_host: { 'client_id' => 'client_id', 'client_secret' => 'client_secret' },
+                                   remote_hosts: { 'https://test.com/' => { 'client_id' => 'client_id', 
+                                                                            'client_secret' => 'client_secret', 
+                                                                            'path' =>  '/oauth2/introspection'}})
+
   
 
 end
